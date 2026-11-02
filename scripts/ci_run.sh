@@ -164,8 +164,13 @@ case "$LANG" in
     ;;
   rust)
     have rustc || fail "rust: rustc not found (use actions-rust-lang/setup-rust-toolchain)"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rust build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    if [ -f Cargo.toml ]; then
+      cargo build --release || fail "rust build"
+      BENCH_CMD=(./target/release/rust "$TASKS")
+    else
+      rustc -O main.rs -o /tmp/bench_${LANG} || fail "rust build"
+      BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    fi
     ;;
   java)
     have javac || fail "java: javac not found (use actions/setup-java with java 21+)"
@@ -537,9 +542,9 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   rust_channels)
-    have rustc || fail "rust_channels: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rust_channels build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "rust_channels: cargo not found"
+    cargo build --release || fail "rust_channels build"
+    BENCH_CMD=(./target/release/rust_channels "$TASKS")
     ;;
   v_alt)
     have v || fail "v_alt: v not found"
@@ -660,9 +665,9 @@ case "$LANG" in
     BENCH_CMD=(node main.js "$TASKS")
     ;;
   rust_channels2)
-    have rustc || fail "rust_channels2: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rust_channels2 build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "rust_channels2: cargo not found"
+    cargo build --release || fail "rust_channels2 build"
+    BENCH_CMD=(./target/release/rust_channels2 "$TASKS")
     ;;
   java_threads2)
     have javac || fail "java_threads2: javac not found"
@@ -683,9 +688,9 @@ case "$LANG" in
     BENCH_CMD=(java -cp "/tmp/bench_${LANG}.jar:$KOTLIN_JAR" MainKt "$TASKS")
     ;;
   rust_mpsc)
-    have rustc || fail "rust_mpsc: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rust_mpsc build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "rust_mpsc: cargo not found"
+    cargo build --release || fail "rust_mpsc build"
+    BENCH_CMD=(./target/release/rust_mpsc "$TASKS")
     ;;
   rust_tokio2)
     have cargo || fail "rust_tokio2: cargo not found"
@@ -803,9 +808,9 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   crossbeam)
-    have rustc || fail "crossbeam: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "crossbeam build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "crossbeam: cargo not found"
+    cargo build --release || fail "crossbeam build"
+    BENCH_CMD=(./target/release/crossbeam "$TASKS")
     ;;
   async_std)
     have cargo || fail "async_std: cargo not found"
@@ -818,14 +823,14 @@ case "$LANG" in
     BENCH_CMD=(./target/release/smol "$TASKS")
     ;;
   gtk_rs)
-    have rustc || fail "gtk_rs: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "gtk_rs build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "gtk_rs: cargo not found"
+    cargo build --release || fail "gtk_rs build"
+    BENCH_CMD=(./target/release/gtk_rs "$TASKS")
     ;;
   rayon)
-    have rustc || fail "rayon: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rayon build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "rayon: cargo not found"
+    cargo build --release || fail "rayon build"
+    BENCH_CMD=(./target/release/rayon "$TASKS")
     ;;
   rayon2)
     have cargo || fail "rayon2: cargo not found"

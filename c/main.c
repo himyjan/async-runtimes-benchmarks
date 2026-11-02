@@ -2,37 +2,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdatomic.h>
 
-static void *worker(void *arg) {
+#define NUM_THREADS 1000
+
+static atomic_int remaining;
+static atomic_int next_task;
+int num_tasks;
+
+void *worker(void *arg) {
     (void)arg;
-    sleep(10);
+    while (1) {
+        int i = atomic_fetch_add(&next_task, 1);
+        if (i >= num_tasks) break;
+        sleep(10);
+    }
     return NULL;
 }
 
 int main(int argc, char **argv) {
-    long num_tasks = 100000;
+    num_tasks = 100000;
     if (argc > 1) {
         num_tasks = strtol(argv[1], NULL, 10);
     }
+    remaining = num_tasks;
+    next_task = 0;
 
-    pthread_t *threads = calloc((size_t)num_tasks, sizeof(pthread_t));
-    if (!threads) {
-        fprintf(stderr, "out of memory allocating %ld threads\n", num_tasks);
-        return 1;
+    pthread_t threads[NUM_THREADS];
+    for (int i = 0; i < NUM_THREADS; i++) {
+        pthread_create(&threads[i], NULL, worker, NULL);
     }
-
-    for (long i = 0; i < num_tasks; i++) {
-        if (pthread_create(&threads[i], NULL, worker, NULL) != 0) {
-            fprintf(stderr, "failed to create thread %ld\n", i);
-            return 1;
-        }
-    }
-
-    for (long i = 0; i < num_tasks; i++) {
+    for (int i = 0; i < NUM_THREADS; i++) {
         pthread_join(threads[i], NULL);
     }
 
-    free(threads);
     printf("All tasks completed\n");
     return 0;
 }
