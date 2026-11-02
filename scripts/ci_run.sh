@@ -523,14 +523,6 @@ case "$LANG" in
     have hy || fail "hy: hy not found"
     BENCH_CMD=(hy main.hy "$TASKS")
     ;;
-  julia)
-    have julia || { apt_install julia || fail "julia: julia not found"; }
-    have julia || fail "julia: julia not found"
-    JULIA_NUM_THREADS=auto julia main.jl "$TASKS" || fail "julia run"
-    echo '{"lang":"julia","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
-    ;;
   julia_threads)
     have julia || { apt_install julia || fail "julia_threads: julia not found"; }
     have julia || fail "julia_threads: julia not found"
