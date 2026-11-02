@@ -278,6 +278,18 @@ jobs:
           sudo apt-get update -qq >/dev/null 2>&1 || true
           sudo apt-get install -y -qq gleam >/dev/null 2>&1 || true
 
+      - name: Set up Elixir
+        if: matrix.language == 'elixir'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq elixir >/dev/null 2>&1 || true
+
+      - name: Set up Elixir threads
+        if: matrix.language == 'elixir_threads'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq elixir >/dev/null 2>&1 || true
+
       - name: Set up PowerShell
         if: matrix.language == 'powershell'
         run: |
