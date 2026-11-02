@@ -1,0 +1,11 @@
+[package]
+name = "tokio_alt"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+
+[[bin]]
+name = "tokio_alt"
+path = "main.rs"

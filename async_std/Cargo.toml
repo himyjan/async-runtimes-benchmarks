@@ -1,0 +1,11 @@
+[package]
+name = "async_std"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-std = { version = "1", features = ["attributes"] }
+
+[[bin]]
+name = "async_std"
+path = "main.rs"

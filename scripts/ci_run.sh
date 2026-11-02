@@ -690,9 +690,9 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   rust_tokio2)
-    have rustc || fail "rust_tokio2: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rust_tokio2 build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "rust_tokio2: cargo not found"
+    cargo build --release || fail "rust_tokio2 build"
+    BENCH_CMD=(./target/release/rust_tokio2 "$TASKS")
     ;;
   d_parallel2)
     have dmd || fail "d_parallel2: dmd not found"
@@ -807,14 +807,14 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   async_std)
-    have rustc || fail "async_std: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "async_std build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "async_std: cargo not found"
+    cargo build --release || fail "async_std build"
+    BENCH_CMD=(./target/release/async_std "$TASKS")
     ;;
   smol)
-    have rustc || fail "smol: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "smol build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "smol: cargo not found"
+    cargo build --release || fail "smol build"
+    BENCH_CMD=(./target/release/smol "$TASKS")
     ;;
   gtk_rs)
     have rustc || fail "gtk_rs: rustc not found"
@@ -827,14 +827,14 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   rayon2)
-    have rustc || fail "rayon2: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "rayon2 build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "rayon2: cargo not found"
+    cargo build --release || fail "rayon2 build"
+    BENCH_CMD=(./target/release/rayon2 "$TASKS")
     ;;
   tokio_alt)
-    have rustc || fail "tokio_alt: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "tokio_alt build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "tokio_alt: cargo not found"
+    cargo build --release || fail "tokio_alt build"
+    BENCH_CMD=(./target/release/tokio_alt "$TASKS")
     ;;
   assembly)
     have nasm || { apt_install nasm binutils || fail "assembly: nasm not found"; }
