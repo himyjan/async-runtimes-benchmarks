@@ -113,12 +113,10 @@ jobs:
           - { language: sbcl, os: ubuntu-latest }
           - { language: hy, os: ubuntu-latest }
           - { language: julia_threads, os: ubuntu-latest }
-          - { language: julia_threads_omt, os: ubuntu-latest }
           - { language: d_parallel, os: ubuntu-latest }
           - { language: rust_channels, os: ubuntu-latest }
           - { language: v_alt, os: ubuntu-latest }
           - { language: fpc, os: ubuntu-latest }
-          - { language: raku_alt, os: ubuntu-latest }
           - { language: koka_cpp, os: ubuntu-latest }
           - { language: oz, os: ubuntu-latest }
           - { language: freepascal, os: ubuntu-latest }
@@ -140,7 +138,6 @@ jobs:
           - { language: deno_alt, os: ubuntu-latest }
           - { language: asdf, os: ubuntu-latest }
           - { language: scheme_alt, os: ubuntu-latest }
-          - { language: raku_alt2, os: ubuntu-latest }
           - { language: odin_alt, os: ubuntu-latest }
           - { language: nim_alt, os: ubuntu-latest }
           - { language: nodejs_alt, os: ubuntu-latest }
@@ -612,7 +609,7 @@ jobs:
           npm install -g tsx typescript >/dev/null 2>&1 || true
 
       - name: Set up Julia
-        if: matrix.language == 'julia' || matrix.language == 'julia_threads' || matrix.language == 'julia_threads_omt'
+        if: matrix.language == 'julia' || matrix.language == 'julia_threads'
         run: |
           sudo apt-get update -qq >/dev/null 2>&1 || true
           sudo apt-get install -y -qq julia >/dev/null 2>&1 || true

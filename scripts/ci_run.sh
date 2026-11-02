@@ -531,15 +531,6 @@ case "$LANG" in
     cat "$RESULT"
     exit 0
     ;;
-  julia_threads_omt)
-    have julia || { apt_install julia || fail "julia_threads_omt: julia not found"; }
-    have julia || fail "julia_threads_omt: julia not found"
-    julia --project=. -e 'using Pkg; Pkg.add("OhMyThreads")' || fail "julia_threads_omt: OhMyThreads install failed"
-    JULIA_NUM_THREADS=auto julia --project=. main.jl "$TASKS" || fail "julia_threads_omt run"
-    echo '{"lang":"julia_threads_omt","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
-    ;;
   d_parallel)
     have dmd || fail "d_parallel: dmd not found"
     dmd -O -release -of/tmp/bench_${LANG} main.d || fail "d_parallel build"
@@ -559,10 +550,6 @@ case "$LANG" in
     have fpc || fail "fpc: fpc not found"
     fpc -O2 main.pas -o /tmp/bench_${LANG} || fail "fpc build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
-    ;;
-  raku_alt)
-    have raku || fail "raku_alt: raku not found"
-    BENCH_CMD=(raku main.raku "$TASKS")
     ;;
   koka_cpp)
     have g++ || fail "koka_cpp: g++ not found"
@@ -658,10 +645,6 @@ case "$LANG" in
   scheme_alt)
     have guile || fail "scheme_alt: guile not found"
     BENCH_CMD=(guile main.scm "$TASKS")
-    ;;
-  raku_alt2)
-    have raku || fail "raku_alt2: raku not found"
-    BENCH_CMD=(raku main.raku "$TASKS")
     ;;
   odin_alt)
     have odin || fail "odin_alt: odin not found"

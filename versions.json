@@ -615,18 +615,6 @@
       "package": "raku",
       "notes": "Raku 2024.07 (Rakudo)"
     },
-    "raku_alt": {
-      "tool": "raku",
-      "version": "2024.07",
-      "package": "raku",
-      "notes": "Raku 2024.07"
-    },
-    "raku_alt2": {
-      "tool": "raku",
-      "version": "2024.07",
-      "package": "raku",
-      "notes": "Raku 2024.07"
-    },
     "raku_threads": {
       "tool": "raku",
       "version": "2024.07",
