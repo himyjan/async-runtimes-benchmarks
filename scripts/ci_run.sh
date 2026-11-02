@@ -197,6 +197,7 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   crystal)
+    have crystal || { apt_install crystal || fail "crystal: crystal not found"; }
     have crystal || fail "crystal: crystal not found"
     crystal build main.cr --release -o /tmp/bench_${LANG} || fail "crystal build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
