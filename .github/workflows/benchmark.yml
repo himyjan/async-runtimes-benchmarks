@@ -182,10 +182,10 @@ jobs:
           - { language: tokio_alt, os: ubuntu-latest }
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python (for bench.py)
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.x"
 
@@ -211,7 +211,7 @@ jobs:
 
       - name: Set up Node.js
         if: matrix.language == 'nodejs'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "latest"
 
@@ -513,7 +513,7 @@ jobs:
 
       - name: Set up TypeScript
         if: matrix.language == 'typescript'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "latest"
 
@@ -623,7 +623,7 @@ jobs:
           ./scripts/ci_run.sh "${{ matrix.language }}"
 
       - name: Upload result artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: bench-result-${{ matrix.language }}
           path: benchmark/result_*.json
@@ -636,15 +636,15 @@ jobs:
     if: always()
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.x"
 
       - name: Download all result artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: benchmark
           merge-multiple: true
