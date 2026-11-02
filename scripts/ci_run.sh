@@ -559,7 +559,8 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   oz)
-    have mozart || fail "oz: mozart not found"
+    have oz || { apt_install mozart2 || fail "oz: oz not found"; }
+    have oz || fail "oz: oz not found"
     BENCH_CMD=(oz main.oz "$TASKS")
     ;;
   freepascal)
