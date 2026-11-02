@@ -23,14 +23,6 @@ set -uo pipefail
 LANG="${1:?usage: ci_run.sh <language> [num_tasks]}"
 TASKS="${2:-100000}"
 
-# Thread-heavy languages should use fewer tasks to avoid OOM on CI runners
-# 100k OS threads * 2MB stack = 200GB virtual memory -> OOM on 16GB runners
-# Note: Ruby now uses Async Fibers (green threads), not OS threads
-case "$LANG" in
-  cpp|cpp_threads|cpp_jthread|cpython|java_threads2|std_thread|crossbeam|rayon|rayon2|gtk_c|qt|d_parallel|d_parallel2|d_phobos|fortran|pascal|pascal_alt|turbo_pascal|lazarus|lazarus_alt|fpc|freepascal|delphi|eiffel|oberon|modula3|common-lisp|common_lisp_sbcl|cl_sbcl|sbcl|scheme|scheme_alt|guile|pthread*|julia_threads)
-    TASKS="${2:-5000}"
-    ;;
-esac
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="$ROOT/$LANG"
 mkdir -p "$ROOT/benchmark"
@@ -177,6 +169,7 @@ case "$LANG" in
     BENCH_CMD=(java -cp . VirtualThreads "$TASKS")
     ;;
   kotlin)
+    have kotlinc || { apt_install kotlin || fail "kotlin: kotlinc not found"; }
     have kotlinc || fail "kotlin: kotlinc not found"
     KOTLIN_JAR="$ROOT/kotlin/kotlinx-coroutines-core-jvm-1.10.1.jar"
     if [ ! -f "$KOTLIN_JAR" ]; then
