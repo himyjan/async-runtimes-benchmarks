@@ -92,7 +92,7 @@ case "$LANG" in
   cpp)
     have clang++ || { apt_install clang clang++ || fail "cpp: clang++ not found"; }
     have clang++ || fail "cpp: clang++ not found"
-    clang++ -std=c++20 -stdlib=libc++ -O2 main.cpp -o /tmp/bench_${LANG} || fail "cpp build"
+    clang++ -std=c++20 -O2 -pthread main.cpp -o /tmp/bench_${LANG} || fail "cpp build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   c)
