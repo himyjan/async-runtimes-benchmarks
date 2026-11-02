@@ -153,7 +153,8 @@ case "$LANG" in
     BENCH_CMD=(racket main.rkt "$TASKS")
     ;;
   elixir)
-    have elixir || fail "elixir: elixir not found (use actions/setup-elixir)"
+    have elixir || { apt_install elixir || fail "elixir: elixir not found"; }
+    have elixir || fail "elixir: elixir not found"
     BENCH_CMD=(elixir main.exs "$TASKS")
     ;;
   julia)
@@ -738,6 +739,7 @@ case "$LANG" in
     BENCH_CMD=(ruby main.rb "$TASKS")
     ;;
   elixir_threads)
+    have elixir || { apt_install elixir || fail "elixir_threads: elixir not found"; }
     have elixir || fail "elixir_threads: elixir not found"
     BENCH_CMD=(elixir main.exs "$TASKS")
     ;;
