@@ -4,7 +4,6 @@
 # With the Async gem scheduler, they can handle 100k concurrent tasks.
 
 require 'async'
-require 'async-http'
 
 num_tasks = (ARGV[0] || 100_000).to_i
 
