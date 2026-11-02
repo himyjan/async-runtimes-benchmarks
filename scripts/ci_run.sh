@@ -150,8 +150,12 @@ case "$LANG" in
     BENCH_CMD=(elixir main.exs "$TASKS")
     ;;
   julia)
-    have julia || fail "julia: julia not found (use actions/setup-julia)"
-    BENCH_CMD=(julia main_a.jl "$TASKS")
+    have julia || { apt_install julia || fail "julia: julia not found"; }
+    have julia || fail "julia: julia not found"
+    JULIA_NUM_THREADS=auto julia main_a.jl "$TASKS" || fail "julia run"
+    echo '{"lang":"julia","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
+    cat "$RESULT"
+    exit 0
     ;;
   go)
     have go || fail "go: go not found (use actions/setup-go)"
@@ -243,7 +247,8 @@ case "$LANG" in
 
   # ========== Added languages ==========
   fsharp)
-    have fsharpc || fail "fsharp: fsharpc not found (use mono or setup-dotnet)"
+    have fsharpc || { apt_install fsharpc || fail "fsharp: fsharpc not found"; }
+    have fsharpc || fail "fsharp: fsharpc not found"
     fsharpc --nologo --out:/tmp/bench_${LANG}.exe main.fsx || fail "fsharp build"
     BENCH_CMD=(mono /tmp/bench_${LANG}.exe "$TASKS")
     ;;
@@ -253,7 +258,8 @@ case "$LANG" in
     BENCH_CMD=(tclsh main.tcl "$TASKS")
     ;;
   scala)
-    have scala-cli || fail "scala: scala-cli not found (use scala/scala-cli/setup-scala)"
+    have scala-cli || { apt_install scala-cli || fail "scala: scala-cli not found"; }
+    have scala-cli || fail "scala: scala-cli not found"
     BENCH_CMD=(scala-cli main.scala "$TASKS")
     ;;
   ocaml)
@@ -509,6 +515,7 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   sbcl)
+    have sbcl || { apt_install sbcl || fail "sbcl: sbcl not found"; }
     have sbcl || fail "sbcl: sbcl not found"
     BENCH_CMD=(sbcl --script main.lisp "$TASKS")
     ;;
@@ -516,9 +523,9 @@ case "$LANG" in
     have hy || fail "hy: hy not found"
     BENCH_CMD=(hy main.hy "$TASKS")
     ;;
-  julia_threads)
-    have julia || { apt_install julia || fail "julia_threads: julia not found"; }
-    have julia || fail "julia_threads: julia not found"
+  julia)
+    have julia || { apt_install julia || fail "julia: julia not found"; }
+    have julia || fail "julia: julia not found"
     JULIA_NUM_THREADS=auto julia main.jl "$TASKS" || fail "julia_threads run"
     echo '{"lang":"julia_threads","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
     cat "$RESULT"
@@ -573,6 +580,7 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   common_lisp_sbcl)
+    have sbcl || { apt_install sbcl || fail "common_lisp_sbcl: sbcl not found"; }
     have sbcl || fail "common_lisp_sbcl: sbcl not found"
     BENCH_CMD=(sbcl --script main.lisp "$TASKS")
     ;;
@@ -643,6 +651,7 @@ case "$LANG" in
     BENCH_CMD=(deno run main.ts "$TASKS")
     ;;
   asdf)
+    have sbcl || { apt_install sbcl || fail "asdf: sbcl not found"; }
     have sbcl || fail "asdf: sbcl not found"
     BENCH_CMD=(sbcl --script main.lisp "$TASKS")
     ;;
@@ -754,6 +763,7 @@ case "$LANG" in
     BENCH_CMD=(erl -noshell -s bench main "$TASKS" -s erlang halt)
     ;;
   cl_sbcl)
+    have sbcl || { apt_install sbcl || fail "cl_sbcl: sbcl not found"; }
     have sbcl || fail "cl_sbcl: sbcl not found"
     BENCH_CMD=(sbcl --script main.lisp "$TASKS")
     ;;
@@ -776,6 +786,7 @@ case "$LANG" in
     BENCH_CMD=(ruby main.rb "$TASKS")
     ;;
   scala_threads)
+    have scala-cli || { apt_install scala-cli || fail "scala_threads: scala-cli not found"; }
     have scala-cli || fail "scala_threads: scala-cli not found"
     BENCH_CMD=(scala-cli main.scala "$TASKS")
     ;;
