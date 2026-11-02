@@ -113,6 +113,7 @@ jobs:
           - { language: sbcl, os: ubuntu-latest }
           - { language: hy, os: ubuntu-latest }
           - { language: julia_threads, os: ubuntu-latest }
+          - { language: julia_threads_omt, os: ubuntu-latest }
           - { language: d_parallel, os: ubuntu-latest }
           - { language: rust_channels, os: ubuntu-latest }
           - { language: v_alt, os: ubuntu-latest }
@@ -611,7 +612,7 @@ jobs:
           npm install -g tsx typescript >/dev/null 2>&1 || true
 
       - name: Set up Julia
-        if: matrix.language == 'julia'
+        if: matrix.language == 'julia' || matrix.language == 'julia_threads' || matrix.language == 'julia_threads_omt'
         run: |
           sudo apt-get update -qq >/dev/null 2>&1 || true
           sudo apt-get install -y -qq julia >/dev/null 2>&1 || true

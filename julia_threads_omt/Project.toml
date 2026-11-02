@@ -1,0 +1,4 @@
+name = "julia_threads_omt"
+version = "0.1.0"
+
+[deps]
