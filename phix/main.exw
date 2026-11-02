@@ -1,0 +1,28 @@
+include p2e.e
+
+atom semaphore
+integer num_tasks = 100000
+integer remaining = num_tasks
+
+procedure worker(atom id)
+    sleep(10)
+    remaining = remaining - 1
+    if remaining = 0 then
+        semaphore_post(semaphore)
+    end if
+end procedure
+
+if command_line()[3] != "" then
+    num_tasks = to_integer(command_line()[3])
+    remaining = num_tasks
+end if
+
+semaphore = semaphore_create()
+
+for i = 1 to num_tasks do
+    task_id = task_create(schedule, {worker, i}, 0)
+    task_schedule(task_id, 0)
+end for
+
+semaphore_wait(semaphore)
+printf(1, "All tasks completed\n")

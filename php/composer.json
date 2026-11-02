@@ -1,0 +1,13 @@
+{
+    "name": "async-runtimes-benchmark/php",
+    "type": "project",
+    "require": {
+        "react/event-loop": "^1.4",
+        "react/promise": "^3.3"
+    },
+    "config": {
+        "platform": {
+            "php": "8.2"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+// Nemerle benchmark - .NET threads
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+module Benchmark
+{
+    mutable numTasks : int = 100000;
+    mutable remaining : int = numTasks;
+    mutable sem : ManualResetEventSlim = new ManualResetEventSlim(false);
+
+    public Worker() : void
+    {
+        Thread.Sleep(10000);
+        when (Interlocked.Decrement(ref remaining) == 0)
+            sem.Set();
+    }
+
+    Main() : void
+    {
+        if (CommandLineParams.Length > 0)
+            numTasks = int.Parse(CommandLineParams[0]);
+        remaining = numTasks;
+        sem = new ManualResetEventSlim(false);
+
+        def tasks = array(numTasks, fun (i) => Task.Factory.StartNew(Worker));
+        Task.WaitAll(tasks);
+        Console.WriteLine("All tasks completed");
+    }
+}

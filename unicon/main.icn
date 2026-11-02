@@ -1,0 +1,24 @@
+import unicon.*;
+
+procedure main()
+    local numTasks := 100000
+    local remaining := numTasks
+
+    if *argv > 1 then
+        numTasks := numeric(argv[2])
+        remaining := numTasks
+    end
+
+    every i := 1 to numTasks do
+        create worker(remaining)
+
+    every wait(|worker) do |r|
+        remaining := r - 1
+        if remaining = 0 then
+            write("All tasks completed")
+end
+
+procedure worker(remaining)
+    sleep(10)
+    suspend remaining
+end

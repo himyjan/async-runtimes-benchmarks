@@ -1,0 +1,10 @@
+name: bench
+version: "1.0.0"
+description: Async runtime benchmark
+
+dependencies:
+  gleam_stdlib: "1.19.2"
+
+erlang_options:
+  modules:
+    - src/bench.gleam

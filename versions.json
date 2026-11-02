@@ -1,0 +1,909 @@
+{
+  "schema_version": 1,
+  "generated": "2026-11-02",
+  "description": "Latest stable compiler/toolchain versions for async-runtimes-benchmarks",
+  "languages": {
+    "ada": {
+      "tool": "gnatmake",
+      "version": "14.2.0",
+      "package": "gnat",
+      "notes": "GCC Ada compiler, part of GCC 14.2"
+    },
+    "apl": {
+      "tool": "dyalog",
+      "version": "19.0",
+      "package": "dyalog",
+      "notes": "Dyalog APL 19.0"
+    },
+    "assembly": {
+      "tool": "nasm",
+      "version": "2.16.03",
+      "package": "nasm",
+      "notes": "Netwide Assembler 2.16.03"
+    },
+    "ballerina": {
+      "tool": "bal",
+      "version": "2201.8.0",
+      "package": "ballerina",
+      "notes": "Ballerina 2201.8.0 (Swan Lake)"
+    },
+    "c": {
+      "tool": "gcc",
+      "version": "14.2.0",
+      "package": "gcc",
+      "notes": "GCC 14.2.0"
+    },
+    "ceylon": {
+      "tool": "ceylon",
+      "version": "1.3.3",
+      "package": "ceylon",
+      "notes": "Ceylon 1.3.3"
+    },
+    "chapel": {
+      "tool": "chpl",
+      "version": "1.31.0",
+      "package": "chapel",
+      "notes": "Chapel 1.31.0"
+    },
+    "chapel_alt": {
+      "tool": "chpl",
+      "version": "1.31.0",
+      "package": "chapel",
+      "notes": "Chapel 1.31.0"
+    },
+    "clojure": {
+      "tool": "clojure",
+      "version": "1.12.0",
+      "package": "clojure",
+      "notes": "Clojure 1.12.0"
+    },
+    "cobol": {
+      "tool": "cobc",
+      "version": "3.2.0",
+      "package": "gnucobol",
+      "notes": "GnuCOBOL 3.2.0"
+    },
+    "common-lisp": {
+      "tool": "sbcl",
+      "version": "2.4.8",
+      "package": "sbcl",
+      "notes": "Steel Bank Common Lisp 2.4.8"
+    },
+    "common_lisp_sbcl": {
+      "tool": "sbcl",
+      "version": "2.4.8",
+      "package": "sbcl",
+      "notes": "Steel Bank Common Lisp 2.4.8"
+    },
+    "cpp": {
+      "tool": "clang++",
+      "version": "19.1.0",
+      "package": "clang",
+      "notes": "Clang 19.1.0 (LLVM 19)"
+    },
+    "cpp_threads": {
+      "tool": "g++",
+      "version": "14.2.0",
+      "package": "g++",
+      "notes": "GCC 14.2.0"
+    },
+    "cpp_atomic": {
+      "tool": "g++",
+      "version": "14.2.0",
+      "package": "g++",
+      "notes": "GCC 14.2.0"
+    },
+    "cpp_jthread": {
+      "tool": "g++",
+      "version": "14.2.0",
+      "package": "g++",
+      "notes": "GCC 14.2.0 (C++20)"
+    },
+    "cpp_threads2": {
+      "tool": "g++",
+      "version": "14.2.0",
+      "package": "g++",
+      "notes": "GCC 14.2.0"
+    },
+    "crystal": {
+      "tool": "crystal",
+      "version": "1.13.0",
+      "package": "crystal",
+      "notes": "Crystal 1.13.0"
+    },
+    "d": {
+      "tool": "dmd",
+      "version": "2.107.1",
+      "package": "dmd",
+      "notes": "DMD 2.107.1"
+    },
+    "dart": {
+      "tool": "dart",
+      "version": "3.5.0",
+      "package": "dart",
+      "notes": "Dart 3.5.0"
+    },
+    "dart_alt": {
+      "tool": "dart",
+      "version": "3.5.0",
+      "package": "dart",
+      "notes": "Dart 3.5.0"
+    },
+    "deno": {
+      "tool": "deno",
+      "version": "1.46.0",
+      "package": "deno",
+      "notes": "Deno 1.46.0"
+    },
+    "deno_alt": {
+      "tool": "deno",
+      "version": "1.46.0",
+      "package": "deno",
+      "notes": "Deno 1.46.0"
+    },
+    "dotnet": {
+      "tool": "dotnet",
+      "version": "10.0.0",
+      "package": "dotnet-sdk-10.0",
+      "notes": ".NET SDK 10.0"
+    },
+    "dotnet_threads2": {
+      "tool": "dotnet",
+      "version": "10.0.0",
+      "package": "dotnet-sdk-10.0",
+      "notes": ".NET SDK 10.0"
+    },
+    "eiffel": {
+      "tool": "ec",
+      "version": "24.05",
+      "package": "gnueiffel",
+      "notes": "EiffelStudio 24.05"
+    },
+    "elixir": {
+      "tool": "elixir",
+      "version": "1.17.0",
+      "package": "elixir",
+      "notes": "Elixir 1.17.0"
+    },
+    "elixir_threads": {
+      "tool": "elixir",
+      "version": "1.17.0",
+      "package": "elixir",
+      "notes": "Elixir 1.17.0"
+    },
+    "erlang": {
+      "tool": "erlc",
+      "version": "26.2.1",
+      "package": "erlang-base",
+      "notes": "OTP 26.2.1"
+    },
+    "erlang_threads": {
+      "tool": "erlc",
+      "version": "26.2.1",
+      "package": "erlang-base",
+      "notes": "OTP 26.2.1"
+    },
+    "fsharp": {
+      "tool": "fsharpc",
+      "version": "8.0.201",
+      "package": "mono-complete",
+      "notes": "F# 8.0 via Mono 7.0"
+    },
+    "factor": {
+      "tool": "factor",
+      "version": "0.99",
+      "package": "factor",
+      "notes": "Factor 0.99"
+    },
+    "flix": {
+      "tool": "flix",
+      "version": "0.44.0",
+      "package": "flix",
+      "notes": "Flix 0.44.0"
+    },
+    "flame": {
+      "tool": "flame",
+      "version": "1.0.0",
+      "package": "flame",
+      "notes": "Flame 1.0.0"
+    },
+    "fortran": {
+      "tool": "gfortran",
+      "version": "14.2.0",
+      "package": "gfortran",
+      "notes": "GCC 14.2.0"
+    },
+    "frege": {
+      "tool": "frege",
+      "version": "3.27.506",
+      "package": "frege",
+      "notes": "Frege 3.27.506"
+    },
+    "fsharp": {
+      "tool": "fsharpc",
+      "version": "8.0.201",
+      "package": "mono-complete",
+      "notes": "F# 8.0 via Mono"
+    },
+    "gc": {
+      "tool": "go",
+      "version": "1.24.0",
+      "package": "golang",
+      "notes": "Go 1.24.0"
+    },
+    "go": {
+      "tool": "go",
+      "version": "1.24.0",
+      "package": "golang",
+      "notes": "Go 1.24.0"
+    },
+    "gosu": {
+      "tool": "gosu",
+      "version": "1.16.0",
+      "package": "gosu",
+      "notes": "Gosu 1.16.0"
+    },
+    "groovy": {
+      "tool": "groovy",
+      "version": "4.0.18",
+      "package": "groovy",
+      "notes": "Groovy 4.0.18"
+    },
+    "guile": {
+      "tool": "guile",
+      "version": "3.0.9",
+      "package": "guile-3.0",
+      "notes": "GNU Guile 3.0.9"
+    },
+    "hack": {
+      "tool": "hhvm",
+      "version": "4.180.1",
+      "package": "hhvm",
+      "notes": "HHVM 4.180.1"
+    },
+    "haskell": {
+      "tool": "stack",
+      "version": "2.11.1",
+      "package": "haskell-stack",
+      "notes": "Haskell Stack 2.11.1 (GHC 9.8.2)"
+    },
+    "haxe": {
+      "tool": "haxe",
+      "version": "4.3.0",
+      "package": "haxe",
+      "notes": "Haxe 4.3.0"
+    },
+    "hy": {
+      "tool": "hy",
+      "version": "0.25.0",
+      "package": "hy",
+      "notes": "Hy 0.25.0 (Python package)"
+    },
+    "hylang": {
+      "tool": "hy",
+      "version": "0.25.0",
+      "package": "hy",
+      "notes": "Hy 0.25.0 (Python package)"
+    },
+    "idris2": {
+      "tool": "idris2",
+      "version": "0.5.2",
+      "package": "idris2",
+      "notes": "Idris 2 0.5.2"
+    },
+    "io": {
+      "tool": "io",
+      "version": "2018.11.11",
+      "package": "io-language",
+      "notes": "Io 2018.11.11"
+    },
+    "janet": {
+      "tool": "janet",
+      "version": "1.15.0",
+      "package": "janet",
+      "notes": "Janet 1.15.0"
+    },
+    "java": {
+      "tool": "javac",
+      "version": "21.0.5",
+      "package": "temurin-21",
+      "notes": "Eclipse Temurin JDK 21.0.5"
+    },
+    "java_threads2": {
+      "tool": "javac",
+      "version": "21.0.5",
+      "package": "temurin-21",
+      "notes": "Eclipse Temurin JDK 21.0.5"
+    },
+    "javascript": {
+      "tool": "node",
+      "version": "22.12.0",
+      "package": "nodejs",
+      "notes": "Node.js 22.12.0 LTS"
+    },
+    "j": {
+      "tool": "ijconsole",
+      "version": "9.02",
+      "package": "jconsole",
+      "notes": "J 9.02"
+    },
+    "julia": {
+      "tool": "julia",
+      "version": "1.11.0",
+      "package": "julia",
+      "notes": "Julia 1.11.0"
+    },
+    "julia_threads": {
+      "tool": "julia",
+      "version": "1.11.0",
+      "package": "julia",
+      "notes": "Julia 1.11.0 with JULIA_NUM_THREADS=auto"
+    },
+    "koka": {
+      "tool": "koka",
+      "version": "2.3.0",
+      "package": "koka",
+      "notes": "Koka 2.3.0"
+    },
+    "koka_cpp": {
+      "tool": "g++",
+      "version": "14.2.0",
+      "package": "g++",
+      "notes": "GCC 14.2.0 (Koka C++ backend)"
+    },
+    "kotlin": {
+      "tool": "kotlinc",
+      "version": "2.0.20",
+      "package": "kotlin",
+      "notes": "Kotlin 2.0.20"
+    },
+    "kotlin_threads2": {
+      "tool": "kotlinc",
+      "version": "2.0.20",
+      "package": "kotlin",
+      "notes": "Kotlin 2.0.20"
+    },
+    "lean": {
+      "tool": "lean",
+      "version": "4.12.0",
+      "package": "lean",
+      "notes": "Lean 4.12.0"
+    },
+    "lazarus": {
+      "tool": "fpc",
+      "version": "3.2.4",
+      "package": "fpc",
+      "notes": "Free Pascal 3.2.4"
+    },
+    "lazarus_alt": {
+      "tool": "fpc",
+      "version": "3.2.4",
+      "package": "fpc",
+      "notes": "Free Pascal 3.2.4"
+    },
+    "lean": {
+      "tool": "lean",
+      "version": "4.12.0",
+      "package": "lean",
+      "notes": "Lean 4.12.0"
+    },
+    "lobster": {
+      "tool": "lobster",
+      "version": "0.9.12",
+      "package": "lobster",
+      "notes": "Lobster 0.9.12"
+    },
+    "lua": {
+      "tool": "lua5.4",
+      "version": "5.4.7",
+      "package": "lua5.4",
+      "notes": "Lua 5.4.7"
+    },
+    "luajit": {
+      "tool": "luajit",
+      "version": "2.1.0-beta3",
+      "package": "luajit",
+      "notes": "LuaJIT 2.1.0-beta3"
+    },
+    "matlab": {
+      "tool": "matlab",
+      "version": "R2024b",
+      "package": "matlab",
+      "notes": "MATLAB R2024b (commercial)"
+    },
+    "mercury": {
+      "tool": "mmc",
+      "version": "22.01.8",
+      "package": "mercury",
+      "notes": "Mercury 22.01.8"
+    },
+    "modula3": {
+      "tool": "m3",
+      "version": "5.11.0",
+      "package": "cm3",
+      "notes": "CM3 5.11.0"
+    },
+    "mozart": {
+      "tool": "oz",
+      "version": "2.0.0",
+      "package": "mozart2",
+      "notes": "Mozart 2 Oz 2.0.0"
+    },
+    "nim": {
+      "tool": "nim",
+      "version": "2.0.4",
+      "package": "nim",
+      "notes": "Nim 2.0.4"
+    },
+    "nim_alt": {
+      "tool": "nim",
+      "version": "2.0.4",
+      "package": "nim",
+      "notes": "Nim 2.0.4"
+    },
+    "nodejs": {
+      "tool": "node",
+      "version": "22.12.0",
+      "package": "nodejs",
+      "notes": "Node.js 22.12.0 LTS"
+    },
+    "nodejs_alt": {
+      "tool": "node",
+      "version": "22.12.0",
+      "package": "nodejs",
+      "notes": "Node.js 22.12.0 LTS"
+    },
+    "ocaml": {
+      "tool": "ocamlc",
+      "version": "5.2.0",
+      "package": "ocaml",
+      "notes": "OCaml 5.2.0"
+    },
+    "odin": {
+      "tool": "odin",
+      "version": "dev-2024-08",
+      "package": "odin",
+      "notes": "Odin dev-2024-08 (from GitHub releases)"
+    },
+    "odin_alt": {
+      "tool": "odin",
+      "version": "dev-2024-08",
+      "package": "odin",
+      "notes": "Odin dev-2024-08"
+    },
+    "oz": {
+      "tool": "oz",
+      "version": "2.0.0",
+      "package": "mozart2",
+      "notes": "Mozart 2 Oz 2.0.0"
+    },
+    "pascale": {
+      "tool": "fpc",
+      "version": "3.2.4",
+      "package": "fpc",
+      "notes": "Free Pascal 3.2.4"
+    },
+    "pascal": {
+      "tool": "fpc",
+      "version": "3.2.4",
+      "package": "fpc",
+      "notes": "Free Pascal 3.2.4"
+    },
+    "pascal_alt": {
+      "tool": "fpc",
+      "version": "3.2.4",
+      "package": "fpc",
+      "notes": "Free Pascal 3.2.4"
+    },
+    "perl": {
+      "tool": "perl",
+      "version": "5.38.2",
+      "package": "perl",
+      "notes": "Perl 5.38.2"
+    },
+    "perl_threads": {
+      "tool": "perl",
+      "version": "5.38.2",
+      "package": "perl",
+      "notes": "Perl 5.38.2"
+    },
+    "phix": {
+      "tool": "phix",
+      "version": "1.0.0",
+      "package": "phix",
+      "notes": "Phix 1.0.0"
+    },
+    "phix_alt": {
+      "tool": "phix",
+      "version": "1.0.0",
+      "package": "phix",
+      "notes": "Phix 1.0.0"
+    },
+    "php": {
+      "tool": "php",
+      "version": "8.3.12",
+      "package": "php",
+      "notes": "PHP 8.3.12"
+    },
+    "php_threads": {
+      "tool": "php",
+      "version": "8.3.12",
+      "package": "php",
+      "notes": "PHP 8.3.12"
+    },
+    "pike": {
+      "tool": "pike",
+      "version": "8.1.1600",
+      "package": "pike8-core",
+      "notes": "Pike 8.1.1600"
+    },
+    "pony": {
+      "tool": "ponyc",
+      "version": "0.55.0",
+      "package": "ponyc",
+      "notes": "Pony 0.55.0"
+    },
+    "powershell": {
+      "tool": "pwsh",
+      "version": "7.4.6",
+      "package": "powershell",
+      "notes": "PowerShell 7.4.6"
+    },
+    "prolog": {
+      "tool": "swipl",
+      "version": "9.2.6",
+      "package": "swi-prolog",
+      "notes": "SWI-Prolog 9.2.6"
+    },
+    "psyco": {
+      "tool": "psyco",
+      "version": "1.6",
+      "package": "psyco",
+      "notes": "Psyco 1.6 (Python 2.7 JIT, legacy)"
+    },
+    "python": {
+      "tool": "python3",
+      "version": "3.12.7",
+      "package": "python3",
+      "notes": "Python 3.12.7"
+    },
+    "cpython": {
+      "tool": "python3",
+      "version": "3.12.7",
+      "package": "python3",
+      "notes": "CPython 3.12.7"
+    },
+    "mypy": {
+      "tool": "python3",
+      "version": "3.12.7",
+      "package": "python3",
+      "notes": "CPython 3.12.7 with mypy types"
+    },
+    "pypy": {
+      "tool": "pypy3",
+      "version": "7.3.15",
+      "package": "pypy3",
+      "notes": "PyPy 7.3.15 (Python 3.9 compat)"
+    },
+    "q": {
+      "tool": "q",
+      "version": "4.0",
+      "package": "q",
+      "notes": "Kdb+ Q 4.0 (commercial)"
+    },
+    "q_t": {
+      "tool": "q",
+      "version": "4.0",
+      "package": "q",
+      "notes": "Kdb+ Q 4.0 (commercial)"
+    },
+    "racket": {
+      "tool": "racket",
+      "version": "8.12",
+      "package": "racket",
+      "notes": "Racket 8.12"
+    },
+    "racket_threads": {
+      "tool": "racket",
+      "version": "8.12",
+      "package": "racket",
+      "notes": "Racket 8.12"
+    },
+    "raku": {
+      "tool": "raku",
+      "version": "2024.07",
+      "package": "raku",
+      "notes": "Raku 2024.07 (Rakudo)"
+    },
+    "raku_alt": {
+      "tool": "raku",
+      "version": "2024.07",
+      "package": "raku",
+      "notes": "Raku 2024.07"
+    },
+    "raku_alt2": {
+      "tool": "raku",
+      "version": "2024.07",
+      "package": "raku",
+      "notes": "Raku 2024.07"
+    },
+    "raku_threads": {
+      "tool": "raku",
+      "version": "2024.07",
+      "package": "raku",
+      "notes": "Raku 2024.07"
+    },
+    "red": {
+      "tool": "red",
+      "version": "0.7.0",
+      "package": "red",
+      "notes": "Red 0.7.0"
+    },
+    "ring": {
+      "tool": "ring",
+      "version": "1.14",
+      "package": "ring",
+      "notes": "Ring 1.14"
+    },
+    "ruby": {
+      "tool": "ruby",
+      "version": "3.3.5",
+      "package": "ruby",
+      "notes": "Ruby 3.3.5 with async gem"
+    },
+    "ruby_threads": {
+      "tool": "ruby",
+      "version": "3.3.5",
+      "package": "ruby",
+      "notes": "Ruby 3.3.5 with async gem Fibers"
+    },
+    "ruby_threads2": {
+      "tool": "ruby",
+      "version": "3.3.5",
+      "package": "ruby",
+      "notes": "Ruby 3.3.5 with async gem Fibers"
+    },
+    "rust": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "rust_channels": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "rust_channels2": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "rust_mpsc": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "rust_tokio2": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "std_thread": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "crossbeam": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "async_std": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "smol": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "gtk_rs": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "rayon": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "rayon2": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "tokio_threads": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "tokio_alt": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "scala": {
+      "tool": "scala-cli",
+      "version": "1.2.0",
+      "package": "scala-cli",
+      "notes": "Scala CLI 1.2.0"
+    },
+    "scala_threads": {
+      "tool": "scala-cli",
+      "version": "1.2.0",
+      "package": "scala-cli",
+      "notes": "Scala CLI 1.2.0"
+    },
+    "scheme": {
+      "tool": "guile",
+      "version": "3.0.9",
+      "package": "guile-3.0",
+      "notes": "GNU Guile 3.0.9"
+    },
+    "scheme_alt": {
+      "tool": "guile",
+      "version": "3.0.9",
+      "package": "guile-3.0",
+      "notes": "GNU Guile 3.0.9"
+    },
+    "sbcl": {
+      "tool": "sbcl",
+      "version": "2.4.8",
+      "package": "sbcl",
+      "notes": "Steel Bank Common Lisp 2.4.8"
+    },
+    "scala": {
+      "tool": "scala-cli",
+      "version": "1.2.0",
+      "package": "scala-cli",
+      "notes": "Scala CLI 1.2.0"
+    },
+    "smalltalk": {
+      "tool": "gst",
+      "version": "3.2.50",
+      "package": "gnu-smalltalk",
+      "notes": "GNU Smalltalk 3.2.50"
+    },
+    "smol": {
+      "tool": "rustc",
+      "version": "1.83.0",
+      "package": "rust",
+      "notes": "Rust 1.83.0 (stable)"
+    },
+    "supercollider": {
+      "tool": "scsynth",
+      "version": "3.14.0",
+      "package": "supercollider",
+      "notes": "SuperCollider 3.14.0"
+    },
+    "swift": {
+      "tool": "swiftc",
+      "version": "5.10.0",
+      "package": "swift",
+      "notes": "Swift 5.10 (macOS runner)"
+    },
+    "tcl": {
+      "tool": "tclsh",
+      "version": "8.6.13",
+      "package": "tcl",
+      "notes": "Tcl 8.6.13"
+    },
+    "typescript": {
+      "tool": "node",
+      "version": "22.12.0",
+      "package": "nodejs",
+      "notes": "Node.js 22.12.0 with TypeScript"
+    },
+    "typescript_alt": {
+      "tool": "node",
+      "version": "22.12.0",
+      "package": "nodejs",
+      "notes": "Node.js 22.12.0 with TypeScript + tsx"
+    },
+    "unicon": {
+      "tool": "icont",
+      "version": "12.1",
+      "package": "unicon",
+      "notes": "Unicon 12.1"
+    },
+    "v": {
+      "tool": "v",
+      "version": "0.4.1",
+      "package": "vlang",
+      "notes": "V 0.4.1"
+    },
+    "v_alt": {
+      "tool": "v",
+      "version": "0.4.1",
+      "package": "vlang",
+      "notes": "V 0.4.1"
+    },
+    "v_threads": {
+      "tool": "v",
+      "version": "0.4.1",
+      "package": "vlang",
+      "notes": "V 0.4.1"
+    },
+    "vala": {
+      "tool": "valac",
+      "version": "0.54.0",
+      "package": "valac",
+      "notes": "Vala 0.54.0"
+    },
+    "vyper": {
+      "tool": "python3",
+      "version": "3.12.7",
+      "package": "python3",
+      "notes": "Python 3.12.7 (Vyper syntax wrapper)"
+    },
+    "wolfram": {
+      "tool": "wolfram",
+      "version": "14.1",
+      "package": "wolfram",
+      "notes": "Wolfram Mathematica 14.1 (commercial)"
+    },
+    "wren": {
+      "tool": "wren",
+      "version": "0.4.0",
+      "package": "wren",
+      "notes": "Wren 0.4.0"
+    },
+    "x10": {
+      "tool": "x10c",
+      "version": "2.7.0",
+      "package": "x10",
+      "notes": "X10 2.7.0"
+    },
+    "xtend": {
+      "tool": "javac",
+      "version": "21.0.5",
+      "package": "temurin-21",
+      "notes": "Xtend 2.14.0 over JVM 21"
+    },
+    "zig": {
+      "tool": "zig",
+      "version": "0.13.0",
+      "package": "zig",
+      "notes": "Zig 0.13.0"
+    }
+  },
+  "github_actions": {
+    "actions/checkout": "v4",
+    "actions/setup-python": "v5",
+    "actions/setup-go": "v5",
+    "actions-rust-lang/setup-rust-toolchain": "v1",
+    "actions/setup-java": "v4",
+    "actions/setup-node": "v4",
+    "actions/setup-dotnet": "v4",
+    "dart-lang/setup-dart": "v1",
+    "ruby/setup-ruby": "v1",
+    "actions/upload-artifact": "v4",
+    "actions/download-artifact": "v4"
+  },
+  "notes": "Versions reflect latest stable releases as of 2026-11-02. Some versions (MATLAB, Wolfram, Q, Dyalog APL) are commercial and may not be available on GitHub Actions free runners."
+}

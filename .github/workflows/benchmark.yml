@@ -1,0 +1,654 @@
+name: Benchmark async runtimes
+
+on:
+  workflow_dispatch: # manual trigger
+  push: # keep results fresh on changes to benchmarks
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - "**/*.{rs,go,py,js,rb,cs,java,jl,hs,exs,kt,ts,pl,cr,nim,v,d,erl,raku,rkt,adb,zig}"
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    name: ${{ matrix.language }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # language              OS
+          - { language: cpp, os: ubuntu-latest }
+          - { language: c, os: ubuntu-latest }
+          - { language: swift, os: macos-latest }
+          - { language: ruby, os: ubuntu-latest }
+          - { language: python, os: ubuntu-latest }
+          - { language: nodejs, os: ubuntu-latest }
+          - { language: perl, os: ubuntu-latest }
+          - { language: deno, os: ubuntu-latest }
+          - { language: raku, os: ubuntu-latest }
+          - { language: racket, os: ubuntu-latest }
+          - { language: elixir, os: ubuntu-latest }
+          - { language: julia, os: ubuntu-latest }
+          - { language: go, os: ubuntu-latest }
+          - { language: rust, os: ubuntu-latest }
+          - { language: java, os: ubuntu-latest }
+          - { language: kotlin, os: ubuntu-latest }
+          - { language: dotnet, os: ubuntu-latest }
+          - { language: zig, os: ubuntu-latest }
+          - { language: crystal, os: ubuntu-latest }
+          - { language: nim, os: ubuntu-latest }
+          - { language: v, os: ubuntu-latest }
+          - { language: d, os: ubuntu-latest }
+          - { language: erlang, os: ubuntu-latest }
+          - { language: haskell, os: ubuntu-latest }
+          - { language: ada, os: ubuntu-latest }
+          - { language: dart, os: ubuntu-latest }
+          - { language: fsharp, os: ubuntu-latest }
+          - { language: tcl, os: ubuntu-latest }
+          - { language: scala, os: ubuntu-latest }
+          - { language: ocaml, os: ubuntu-latest }
+          - { language: php, os: ubuntu-latest }
+          - { language: clojure, os: ubuntu-latest }
+          - { language: groovy, os: ubuntu-latest }
+          - { language: pypy, os: ubuntu-latest }
+          - { language: gleam, os: ubuntu-latest }
+          - { language: powershell, os: ubuntu-latest }
+          - { language: common-lisp, os: ubuntu-latest }
+          - { language: scheme, os: ubuntu-latest }
+          - { language: pascal, os: ubuntu-latest }
+          - { language: objective-c, os: macos-latest }
+          - { language: fortran, os: ubuntu-latest }
+          - { language: cobol, os: ubuntu-latest }
+          - { language: smalltalk, os: ubuntu-latest }
+          - { language: odin, os: ubuntu-latest }
+          - { language: pony, os: ubuntu-latest }
+          - { language: chapel, os: ubuntu-latest }
+          - { language: lean, os: ubuntu-latest }
+          - { language: ballerina, os: ubuntu-latest }
+          - { language: haxe, os: ubuntu-latest }
+          - { language: r, os: ubuntu-latest }
+          - { language: vala, os: ubuntu-latest }
+          - { language: phix, os: ubuntu-latest }
+          - { language: x10, os: ubuntu-latest }
+          - { language: lobster, os: ubuntu-latest }
+          - { language: factor, os: ubuntu-latest }
+          - { language: sml, os: ubuntu-latest }
+          - { language: mercury, os: ubuntu-latest }
+          - { language: red, os: ubuntu-latest }
+          - { language: oberon, os: ubuntu-latest }
+          - { language: modula3, os: ubuntu-latest }
+          - { language: frege, os: ubuntu-latest }
+          - { language: apl, os: ubuntu-latest }
+          - { language: q, os: ubuntu-latest }
+          - { language: supercollider, os: ubuntu-latest }
+          - { language: ring, os: ubuntu-latest }
+          - { language: xtend, os: ubuntu-latest }
+          - { language: gosu, os: ubuntu-latest }
+          - { language: ceylon, os: ubuntu-latest }
+          - { language: unicon, os: ubuntu-latest }
+          - { language: assembly, os: ubuntu-latest }
+          - { language: janet, os: ubuntu-latest }
+          - { language: wren, os: ubuntu-latest }
+          - { language: io, os: ubuntu-latest }
+          - { language: idris2, os: ubuntu-latest }
+          - { language: flix, os: ubuntu-latest }
+          - { language: koka, os: ubuntu-latest }
+          - { language: prolog, os: ubuntu-latest }
+          - { language: typescript, os: ubuntu-latest }
+          - { language: hack, os: ubuntu-latest }
+          - { language: eiffel, os: ubuntu-latest }
+          - { language: pike, os: ubuntu-latest }
+          - { language: j, os: ubuntu-latest }
+          - { language: matlab, os: ubuntu-latest }
+          - { language: wolfram, os: ubuntu-latest }
+          - { language: nemerle, os: ubuntu-latest }
+          - { language: fantom, os: ubuntu-latest }
+          - { language: lazarus, os: ubuntu-latest }
+          - { language: angelscript, os: ubuntu-latest }
+          - { language: chapel_alt, os: ubuntu-latest }
+          - { language: sbcl, os: ubuntu-latest }
+          - { language: hy, os: ubuntu-latest }
+          - { language: julia_threads, os: ubuntu-latest }
+          - { language: d_parallel, os: ubuntu-latest }
+          - { language: rust_channels, os: ubuntu-latest }
+          - { language: v_alt, os: ubuntu-latest }
+          - { language: fpc, os: ubuntu-latest }
+          - { language: raku_alt, os: ubuntu-latest }
+          - { language: koka_cpp, os: ubuntu-latest }
+          - { language: oz, os: ubuntu-latest }
+          - { language: freepascal, os: ubuntu-latest }
+          - { language: common_lisp_sbcl, os: ubuntu-latest }
+          - { language: guile, os: ubuntu-latest }
+          - { language: phix_alt, os: ubuntu-latest }
+          - { language: delphi, os: ubuntu-latest }
+          - { language: c11_atomic, os: ubuntu-latest }
+          - { language: cpp_atomic, os: ubuntu-latest }
+          - { language: pascal_alt, os: ubuntu-latest }
+          - { language: turbo_pascal, os: ubuntu-latest }
+          - { language: lazarus_alt, os: ubuntu-latest }
+          - { language: vyper, os: ubuntu-latest }
+          - { language: hylang, os: ubuntu-latest }
+          - { language: mypy, os: ubuntu-latest }
+          - { language: cpython, os: ubuntu-latest }
+          - { language: typescript_alt, os: ubuntu-latest }
+          - { language: dart_alt, os: ubuntu-latest }
+          - { language: deno_alt, os: ubuntu-latest }
+          - { language: asdf, os: ubuntu-latest }
+          - { language: scheme_alt, os: ubuntu-latest }
+          - { language: raku_alt2, os: ubuntu-latest }
+          - { language: odin_alt, os: ubuntu-latest }
+          - { language: nim_alt, os: ubuntu-latest }
+          - { language: nodejs_alt, os: ubuntu-latest }
+          - { language: rust_channels2, os: ubuntu-latest }
+          - { language: java_threads2, os: ubuntu-latest }
+          - { language: csharp_threads2, os: ubuntu-latest }
+          - { language: kotlin_threads2, os: ubuntu-latest }
+          - { language: rust_mpsc, os: ubuntu-latest }
+          - { language: rust_tokio2, os: ubuntu-latest }
+          - { language: d_parallel2, os: ubuntu-latest }
+          - { language: gtk, os: ubuntu-latest }
+          - { language: gtk_c, os: ubuntu-latest }
+          - { language: flutter, os: ubuntu-latest }
+          - { language: qt, os: ubuntu-latest }
+          - { language: d_phobos, os: ubuntu-latest }
+          - { language: ceylon_threads, os: ubuntu-latest }
+          - { language: racket_threads, os: ubuntu-latest }
+          - { language: ruby_threads, os: ubuntu-latest }
+          - { language: elixir_threads, os: ubuntu-latest }
+          - { language: erlang_threads, os: ubuntu-latest }
+          - { language: cl_sbcl, os: ubuntu-latest }
+          - { language: php_threads, os: ubuntu-latest }
+          - { language: raku_threads, os: ubuntu-latest }
+          - { language: perl_threads, os: ubuntu-latest }
+          - { language: ruby_threads2, os: ubuntu-latest }
+          - { language: scala_threads, os: ubuntu-latest }
+          - { language: tokio_threads, os: ubuntu-latest }
+          - { language: std_thread, os: ubuntu-latest }
+          - { language: v_threads, os: ubuntu-latest }
+          - { language: browser_js, os: ubuntu-latest }
+          - { language: cpp_threads, os: ubuntu-latest }
+          - { language: cpp_jthread, os: ubuntu-latest }
+          - { language: crossbeam, os: ubuntu-latest }
+          - { language: async_std, os: ubuntu-latest }
+          - { language: smol, os: ubuntu-latest }
+          - { language: gtk_rs, os: ubuntu-latest }
+          - { language: rayon, os: ubuntu-latest }
+          - { language: rayon2, os: ubuntu-latest }
+          - { language: tokio_alt, os: ubuntu-latest }
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for bench.py)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Official toolchain setups (fast, cached) where available — always latest stable.
+      - name: Set up Go
+        if: matrix.language == 'go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Set up Rust toolchain
+        if: matrix.language == 'rust'
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          channel: "stable"
+
+      - name: Set up Java (latest LTS for virtual threads)
+        if: matrix.language == 'java'
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Set up Node.js
+        if: matrix.language == 'nodejs'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Set up Ruby
+        if: matrix.language == 'ruby'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Set up .NET SDK
+        if: matrix.language == 'dotnet'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0"
+
+      - name: Set up Dart SDK
+        if: matrix.language == 'dart'
+        uses: dart-lang/setup-dart@v1
+
+      - name: Set up Mono (F#)
+        if: matrix.language == 'fsharp'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq mono-complete >/dev/null 2>&1 || true
+
+      - name: Set up Scala CLI
+        if: matrix.language == 'scala'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq scala-cli >/dev/null 2>&1 || true
+
+      - name: Set up OCaml
+        if: matrix.language == 'ocaml'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq ocaml opam >/dev/null 2>&1 || true
+
+      - name: Set up PHP + Composer
+        if: matrix.language == 'php'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq php composer >/dev/null 2>&1 || true
+
+      - name: Set up Clojure
+        if: matrix.language == 'clojure'
+        run: |
+          curl -fsSL https://download.clojure.org/install/linux-install-1.11.1.sh -o /tmp/clojure-install.sh &&
+            chmod +x /tmp/clojure-install.sh && sudo /tmp/clojure-install.sh || true
+
+      - name: Set up Groovy
+        if: matrix.language == 'groovy'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq groovy >/dev/null 2>&1 || true
+
+      - name: Set up PyPy
+        if: matrix.language == 'pypy'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq pypy3 >/dev/null 2>&1 || true
+
+      - name: Set up Gleam
+        if: matrix.language == 'gleam'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq gleam >/dev/null 2>&1 || true
+
+      - name: Set up PowerShell
+        if: matrix.language == 'powershell'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq powershell >/dev/null 2>&1 || true
+
+      - name: Set up Common Lisp (SBCL)
+        if: matrix.language == 'common-lisp'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq sbcl >/dev/null 2>&1 || true
+
+      - name: Set up Scheme (Guile)
+        if: matrix.language == 'scheme'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq guile-3.0 >/dev/null 2>&1 || true
+
+      - name: Set up FreePascal
+        if: matrix.language == 'pascal'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq fpc >/dev/null 2>&1 || true
+
+      - name: Set up Objective-C
+        if: matrix.language == 'objective-c'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq clang libobjc2-dev libgnustep-base-dev >/dev/null 2>&1 || true
+
+      - name: Set up Fortran
+        if: matrix.language == 'fortran'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq gfortran >/dev/null 2>&1 || true
+
+      - name: Set up GnuCOBOL
+        if: matrix.language == 'cobol'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq gnucobol >/dev/null 2>&1 || true
+
+      - name: Set up GNU Smalltalk
+        if: matrix.language == 'smalltalk'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq gnu-smalltalk >/dev/null 2>&1 || true
+
+      - name: Set up Odin
+        if: matrix.language == 'odin'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq odin >/dev/null 2>&1 || {
+            curl -fsSL https://github.com/odin-lang/Odin/releases/latest/download/odin-ubuntu-16-04-amd64.zip -o /tmp/odin.zip 2>/dev/null &&
+            unzip -o /tmp/odin.zip -d /tmp/odin && export PATH="/tmp/odin:$PATH" || true
+          }
+          command -v odin >/dev/null 2>&1 || echo "Odin not available"
+
+      - name: Set up Pony
+        if: matrix.language == 'pony'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq ponyc >/dev/null 2>&1 || true
+
+      - name: Set up Chapel
+        if: matrix.language == 'chapel'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq chapel >/dev/null 2>&1 || true
+
+      - name: Set up Lean
+        if: matrix.language == 'lean'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq lean >/dev/null 2>&1 || true
+
+      - name: Set up Ballerina
+        if: matrix.language == 'ballerina'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq ballerina >/dev/null 2>&1 || true
+
+      - name: Set up Haxe
+        if: matrix.language == 'haxe'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq haxe neko >/dev/null 2>&1 || true
+
+      - name: Set up R
+        if: matrix.language == 'r'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq r-base >/dev/null 2>&1 || true
+
+      - name: Set up Vala
+        if: matrix.language == 'vala'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq valac libglib2.0-dev >/dev/null 2>&1 || true
+
+      - name: Set up Phix
+        if: matrix.language == 'phix'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq phix >/dev/null 2>&1 || true
+
+      - name: Set up X10
+        if: matrix.language == 'x10'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq x10 >/dev/null 2>&1 || true
+
+      - name: Set up Lobster
+        if: matrix.language == 'lobster'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq lobster >/dev/null 2>&1 || true
+
+      - name: Set up Factor
+        if: matrix.language == 'factor'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq factor >/dev/null 2>&1 || true
+
+      - name: Set up SML/NJ
+        if: matrix.language == 'sml'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq smlnj >/dev/null 2>&1 || true
+
+      - name: Set up Mercury
+        if: matrix.language == 'mercury'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq mercury >/dev/null 2>&1 || true
+
+      - name: Set up Red
+        if: matrix.language == 'red'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq red >/dev/null 2>&1 || true
+
+      - name: Set up Oberon
+        if: matrix.language == 'oberon'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq obc >/dev/null 2>&1 || true
+
+      - name: Set up Modula-3
+        if: matrix.language == 'modula3'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq cm3 >/dev/null 2>&1 || true
+
+      - name: Set up Frege
+        if: matrix.language == 'frege'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq frege >/dev/null 2>&1 || true
+
+      - name: Set up APL (Dyalog)
+        if: matrix.language == 'apl'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq dyalog >/dev/null 2>&1 || true
+
+      - name: Set up Q
+        if: matrix.language == 'q'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq q >/dev/null 2>&1 || true
+
+      - name: Set up SuperCollider
+        if: matrix.language == 'supercollider'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq supercollider >/dev/null 2>&1 || true
+
+      - name: Set up Ring
+        if: matrix.language == 'ring'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq ring >/dev/null 2>&1 || true
+
+      - name: Set up Xtend
+        if: matrix.language == 'xtend'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq xtend >/dev/null 2>&1 || true
+
+      - name: Set up Gosu
+        if: matrix.language == 'gosu'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq gosu >/dev/null 2>&1 || true
+
+      - name: Set up Ceylon
+        if: matrix.language == 'ceylon'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq ceylon >/dev/null 2>&1 || true
+
+      - name: Set up Unicon
+        if: matrix.language == 'unicon'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq unicon >/dev/null 2>&1 || true
+
+      - name: Set up NASM (Assembly)
+        if: matrix.language == 'assembly'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq nasm binutils make >/dev/null 2>&1 || true
+
+      - name: Set up Prolog (SWI-Prolog)
+        if: matrix.language == 'prolog'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq swiprolog >/dev/null 2>&1 || true
+
+      - name: Set up TypeScript
+        if: matrix.language == 'typescript'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Set up Hack (HHVM)
+        if: matrix.language == 'hack'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq hhvm >/dev/null 2>&1 || true
+
+      - name: Set up Janet
+        if: matrix.language == 'janet'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq janet >/dev/null 2>&1 || true
+
+      - name: Set up Wren
+        if: matrix.language == 'wren'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq wren >/dev/null 2>&1 || true
+
+      - name: Set up Io
+        if: matrix.language == 'io'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq io-language >/dev/null 2>&1 || true
+
+      - name: Set up Idris 2
+        if: matrix.language == 'idris2'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq idris2 >/dev/null 2>&1 || true
+
+      - name: Set up Flix
+        if: matrix.language == 'flix'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq flix >/dev/null 2>&1 || true
+
+      - name: Set up Koka
+        if: matrix.language == 'koka'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq koka >/dev/null 2>&1 || true
+
+      - name: Set up Eiffel
+        if: matrix.language == 'eiffel'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq gnueiffel >/dev/null 2>&1 || true
+
+      - name: Set up Pike
+        if: matrix.language == 'pike'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq pike8-core >/dev/null 2>&1 || true
+
+      - name: Set up J
+        if: matrix.language == 'j'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq jconsole >/dev/null 2>&1 || true
+
+      - name: Set up Nemerle
+        if: matrix.language == 'nemerle'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq mono-complete >/dev/null 2>&1 || true
+
+      - name: Set up Fantom
+        if: matrix.language == 'fantom'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq fantom >/dev/null 2>&1 || true
+
+      - name: Set up Oz (Mozart)
+        if: matrix.language == 'oz'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq mozart2 >/dev/null 2>&1 || true
+
+      - name: Set up V
+        if: matrix.language == 'v' || matrix.language == 'v_alt' || matrix.language == 'v_threads'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq vlang >/dev/null 2>&1 || true
+
+      - name: Set up Hy
+        if: matrix.language == 'hy' || matrix.language == 'hylang'
+        run: |
+          pip install hy >/dev/null 2>&1 || true
+
+      - name: Set up TypeScript (tsx)
+        if: matrix.language == 'typescript_alt'
+        run: |
+          npm install -g tsx typescript >/dev/null 2>&1 || true
+
+      - name: Set up Julia
+        if: matrix.language == 'julia'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq julia >/dev/null 2>&1 || true
+
+      - name: Build and benchmark ${{ matrix.language }}
+        run: |
+          chmod +x scripts/ci_run.sh
+          ./scripts/ci_run.sh "${{ matrix.language }}"
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-result-${{ matrix.language }}
+          path: benchmark/result_*.json
+          retention-days: 30
+
+  aggregate:
+    name: Aggregate results & update README
+    needs: benchmark
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Download all result artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: benchmark
+          merge-multiple: true
+
+      - name: Aggregate into results.json + markdown table
+        run: python3 scripts/aggregate.py
+
+      - name: Splice table into README.md
+        run: python3 scripts/patch_readme.py README.md benchmark/table.md
+
+      - name: Commit README and results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md benchmark/results.json benchmark/table.md
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update benchmark results [skip ci]"
+            git remote set-url origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+            git push origin "${{ github.ref_name }}"
+          fi

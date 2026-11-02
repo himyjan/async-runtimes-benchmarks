@@ -1,0 +1,8 @@
+($let ((num-tasks (if (> ($length $process-argv) 1) ($parse-int ($nth 1 $process-argv)) 100000))
+      (remaining num-tasks))
+  ($for i (range 1 (+ num-tasks 1))
+    ($spawn (fn ()
+      ($sleep 10)
+      ($set remaining (- remaining 1))
+      (when (= remaining 0)
+        ($print "All tasks completed")))))
