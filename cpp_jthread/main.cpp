@@ -3,12 +3,10 @@
 #include <thread>
 #include <vector>
 #include <atomic>
-#include <mutex>
-#include <condition_variable>
 
 #define NUM_THREADS 1000
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     int num_tasks = 100000;
     if (argc > 1) {
         num_tasks = std::stoi(argv[1]);

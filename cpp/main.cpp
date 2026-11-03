@@ -1,12 +1,7 @@
-#include <chrono>
 #include <iostream>
 #include <thread>
 #include <vector>
-#include <atomic>
-#include <mutex>
-#include <condition_variable>
-
-#define NUM_THREADS 1000
+#include <chrono>
 
 int main(int argc, char* argv[]) {
     int num_tasks = 100000;
@@ -14,29 +9,15 @@ int main(int argc, char* argv[]) {
         num_tasks = std::stoi(argv[1]);
     }
 
-    std::atomic<int> remaining(num_tasks);
-    std::atomic<int> next_task(0);
-    std::mutex mtx;
-    std::condition_variable cv;
-    bool done = false;
-
-    auto worker = [&]() {
-        while (true) {
-            int i = next_task.fetch_add(1);
-            if (i >= num_tasks) break;
-            std::this_thread::sleep_for(std::chrono::seconds(10));
-            remaining.fetch_sub(1);
-        }
-    };
+    std::cout << "Spawning " << num_tasks << " concurrent tasks..." << std::endl;
 
     std::vector<std::jthread> threads;
-    threads.reserve(NUM_THREADS);
-    for (int i = 0; i < NUM_THREADS; ++i) {
-        threads.emplace_back(worker);
-    }
+    threads.reserve(static_cast<size_t>(num_tasks));
 
-    for (auto& t : threads) {
-        t.join();
+    for (int i = 0; i < num_tasks; ++i) {
+        threads.emplace_back([] {
+            std::this_thread::sleep_for(std::chrono::seconds(10));
+        });
     }
 
     std::cout << "All tasks completed" << std::endl;
