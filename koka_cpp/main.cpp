@@ -9,12 +9,15 @@ int main(int argc, char** argv) {
     std::atomic<int> remaining(numTasks);
     std::counting_semaphore<> sem(0);
     std::vector<std::thread> threads;
-    threads.reserve(numTasks);
-    for (int i = 0; i < numTasks; i++) {
+    threads.reserve(1000);
+    
+    for (int i = 0; i < 1000; ++i) {
         threads.emplace_back([&]() {
-            std::this_thread::sleep_for(std::chrono::seconds(10));
-            if (remaining.fetch_sub(1) == 1) {
-                sem.release();
+            for (int j = 0; j < numTasks / 1000; ++j) {
+                std::this_thread::sleep_for(std::chrono::seconds(10));
+                if (remaining.fetch_sub(1) == 1) {
+                    sem.release();
+                }
             }
         });
     }

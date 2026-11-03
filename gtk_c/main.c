@@ -5,7 +5,7 @@
 
 #define NUM_THREADS 1000
 
-static atomic_int remaining;
+static std::atomic<int> remaining;
 static sem_t sem;
 
 static void *worker(void *arg) {
