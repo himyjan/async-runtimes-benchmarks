@@ -1,34 +1,38 @@
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Threads {
 
     public static void main(String[] args) throws InterruptedException {
-	int numTasks = 100000;
+        int numTasks = 100000;
         if (args.length > 0) {
             numTasks = Integer.parseInt(args[0]);
         }
 
-        List<Thread> threads = new ArrayList<>();
+        // Fixed thread pool — all 100k tasks pending simultaneously,
+        // 1000 worker threads execute them (not one OS thread per task).
+        int poolSize = Math.min(numTasks, 1000);
+        ExecutorService pool = Executors.newFixedThreadPool(poolSize);
+        java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(numTasks);
 
+        long start = System.nanoTime();
         for (int i = 0; i < numTasks; i++) {
-            Thread thread = new Thread(() -> {
+            pool.submit(() -> {
                 try {
-                    Thread.sleep(Duration.ofSeconds(10));
+                    Thread.sleep(10_000);
                 } catch (InterruptedException e) {
-                    // Handle exception
+                    Thread.currentThread().interrupt();
+                } finally {
+                    latch.countDown();
                 }
             });
-	    thread.start();
-            threads.add(thread);
         }
 
-        // Wait for all threads to complete
-        for (Thread thread : threads) {
-            thread.join();
-        }
+        latch.await();
+        pool.shutdown();
+        pool.awaitTermination(1, TimeUnit.MINUTES);
 
-        System.out.println("All fibers complete");
+        System.out.println("All tasks completed");
     }
 }

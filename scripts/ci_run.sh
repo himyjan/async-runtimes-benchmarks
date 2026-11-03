@@ -211,7 +211,7 @@ case "$LANG" in
   nim)
     have nim || { apt_install nim || fail "nim: nim not found"; }
     have nim || fail "nim: nim not found"
-    nim c -d:release -o:/tmp/bench_${LANG} main.nim || fail "nim build"
+    nim c -d:release --threads:on -o:/tmp/bench_${LANG} main.nim || fail "nim build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   v)
@@ -249,10 +249,9 @@ case "$LANG" in
 
   # ========== Added languages ==========
   fsharp)
-    have fsharpc || { apt_install fsharpc || fail "fsharp: fsharpc not found"; }
-    have fsharpc || fail "fsharp: fsharpc not found"
-    fsharpc --nologo --out:/tmp/bench_${LANG}.exe main.fsx || fail "fsharp build"
-    BENCH_CMD=(mono /tmp/bench_${LANG}.exe "$TASKS")
+    have fsharpi || { apt_install fsharp || fail "fsharp: fsharpi not found"; }
+    have fsharpi || fail "fsharp: fsharpi not found"
+    BENCH_CMD=(fsharpi main.fsx "$TASKS")
     ;;
   tcl)
     have tclsh || { apt_install tcl tcl-thread || fail "tcl: tclsh not found"; }

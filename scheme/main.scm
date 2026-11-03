@@ -1,4 +1,7 @@
-;; Scheme (Guile) — POSIX threads
+;; Scheme (Guile) benchmark — POSIX thread pool over a shared deadline table.
+;; All 100k tasks share one absolute deadline (start + 10s); 1000 worker
+;; threads claim task indices via a shared counter and sleep until each
+;; task's deadline, so the run finishes in ~10s.
 (use-modules (system threads))
 
 (define num-tasks
@@ -7,27 +10,48 @@
         (string->number (cadr args))
         100000)))
 
-(define remaining (make-thread-local num-tasks))
+(define pool-size 1000)
+(define start-time (current-time))
+(define deadline (+ start-time 10))  ; seconds
+(define next-task (make-thread-local 0))
 (define lock (make-mutex))
 (define cond (make-condition-variable))
+(define remaining (make-thread-local num-tasks))
 
-(for-each
- (lambda (_)
-   (make-thread
-    (lambda ()
-      (sleep 10)
-      (mutex-lock! lock)
-      (set! remaining (- remaining 1))
-      (condition-variable-signal! cond)
-      (mutex-unlock! lock))))
- (iota num-tasks))
+(define (sleep-until d)
+  (let loop ()
+    (let ((now (current-time)))
+      (if (< now d)
+          (begin
+            (sleep (- d now))
+            (loop))
+          #t))))
+
+(define (worker)
+  (let loop ()
+    (mutex-lock! lock)
+    (let ((i next-task))
+      (if (>= i num-tasks)
+          (begin (mutex-unlock! lock) #f)
+          (begin
+            (set! next-task (+ i 1))
+            (mutex-unlock! lock)
+            (sleep-until deadline)
+            (mutex-lock! lock)
+            (set! remaining (- remaining 1))
+            (when (= remaining 0) (condition-variable-signal! cond))
+            (mutex-unlock! lock)
+            (loop))))))
+
+(define threads
+  (for/list ([i (in-range pool-size)])
+    (make-thread worker)))
+
+(for ([t threads])
+  (thread-wait! t))
 
 (mutex-lock! lock)
-(let loop ()
-  (if (> remaining 0)
-      (begin
-        (condition-variable-wait! cond lock)
-        (loop))
-      (mutex-unlock! lock)))
+(when (> remaining 0) (condition-variable-wait! cond lock))
+(mutex-unlock! lock)
 
-(display "All tasks completed\n")
+(displayln "All tasks completed")
