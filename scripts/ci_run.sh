@@ -703,7 +703,8 @@ case "$LANG" in
     ;;
   flutter)
     have dart || fail "flutter: dart not found"
-    BENCH_CMD=(dart run main.dart "$TASKS")
+    dart run -Dnum_tasks="$TASKS" main.dart || fail "flutter run"
+    BENCH_CMD=(dart run -Dnum_tasks="$TASKS" main.dart)
     ;;
   qt)
     have g++ || fail "qt: g++ not found"
