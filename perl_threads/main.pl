@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Perl benchmark — fork-based process pool (non-blocking reaping)
+# Perl benchmark — fork-based process pool (not ithreads)
 # Perl ithreads clone the entire interpreter per thread — too heavy for 100k tasks.
 # fork() with copy-on-write is memory-efficient on Unix-like systems.
 # Non-blocking waitpid(WNOHANG) keeps ~1000 processes running continuously.
@@ -38,7 +38,7 @@ for my $i (1 .. $num_tasks) {
     if (!defined $pid) {
         die "fork failed: $!";
     } elsif ($pid == 0) {
-        # Child process work
+        # Child process — sleeps 10 seconds then exits
         sleep(10);
         exit(0);
     }
