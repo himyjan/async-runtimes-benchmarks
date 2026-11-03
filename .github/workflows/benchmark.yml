@@ -113,6 +113,7 @@ jobs:
           - { language: sbcl, os: ubuntu-latest }
           - { language: hy, os: ubuntu-latest }
           - { language: julia_threads, os: ubuntu-latest }
+          - { language: matlab, os: ubuntu-latest }
           - { language: d_parallel, os: ubuntu-latest }
           - { language: rust_channels, os: ubuntu-latest }
           - { language: v_alt, os: ubuntu-latest }
@@ -611,6 +612,12 @@ jobs:
         run: |
           sudo apt-get update -qq >/dev/null 2>&1 || true
           sudo apt-get install -y -qq julia >/dev/null 2>&1 || true
+
+      - name: Set up MATLAB
+        if: matrix.language == 'matlab'
+        uses: mathworks/setup-matlab@v2
+        with:
+          release: R2023b
 
       - name: Build and benchmark ${{ matrix.language }}
         run: |
