@@ -1,73 +1,67 @@
 {
   "languages": [
     {
+      "language": "rust",
+      "mean_peak_rss_mb": 40.41,
+      "mean_elapsed_s": 10.114,
+      "status": "ok"
+    },
+    {
       "language": "nodejs",
-      "mean_peak_rss_mb": 135.58,
-      "mean_elapsed_s": 10.113,
+      "mean_peak_rss_mb": 135.66,
+      "mean_elapsed_s": 10.134,
       "status": "ok"
     },
     {
       "language": "python",
-      "mean_peak_rss_mb": 138.46,
-      "mean_elapsed_s": 11.552,
+      "mean_peak_rss_mb": 138.36,
+      "mean_elapsed_s": 11.434,
       "status": "ok"
     },
     {
       "language": "deno",
-      "mean_peak_rss_mb": 195.24,
-      "mean_elapsed_s": 10.396,
+      "mean_peak_rss_mb": 189.59,
+      "mean_elapsed_s": 10.257,
       "status": "ok"
     },
     {
       "language": "pypy",
-      "mean_peak_rss_mb": 247.71,
-      "mean_elapsed_s": 10.716,
+      "mean_peak_rss_mb": 247.82,
+      "mean_elapsed_s": 10.907,
       "status": "ok"
     },
     {
       "language": "go",
-      "mean_peak_rss_mb": 265.31,
-      "mean_elapsed_s": 10.256,
+      "mean_peak_rss_mb": 265.8,
+      "mean_elapsed_s": 10.227,
       "status": "ok"
     },
     {
       "language": "elixir",
-      "mean_peak_rss_mb": 360.71,
-      "mean_elapsed_s": 10.854,
+      "mean_peak_rss_mb": 361.15,
+      "mean_elapsed_s": 10.682,
       "status": "ok"
     },
     {
       "language": "php",
-      "mean_peak_rss_mb": 570.92,
-      "mean_elapsed_s": 11.197,
+      "mean_peak_rss_mb": 570.52,
+      "mean_elapsed_s": 11.014,
       "status": "ok"
     },
     {
       "language": "raku",
-      "mean_peak_rss_mb": 613.54,
-      "mean_elapsed_s": 11.081,
-      "status": "ok"
-    },
-    {
-      "language": "haskell",
-      "mean_peak_rss_mb": 1077.75,
-      "mean_elapsed_s": 12.076,
+      "mean_peak_rss_mb": 589.97,
+      "mean_elapsed_s": 11.867,
       "status": "ok"
     },
     {
       "language": "ruby",
-      "mean_peak_rss_mb": 1421.47,
-      "mean_elapsed_s": 18.442,
+      "mean_peak_rss_mb": 1421.63,
+      "mean_elapsed_s": 17.614,
       "status": "ok"
     },
     {
       "language": "julia",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "ok"
-    },
-    {
-      "language": "red",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "ok"
@@ -89,6 +83,12 @@
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "ballerina: bal not found"
+    },
+    {
+      "language": "c",
+      "mean_peak_rss_mb": null,
+      "mean_elapsed_s": null,
+      "status": "failed"
     },
     {
       "language": "chapel",
@@ -115,6 +115,12 @@
       "status": "bench measurement failed"
     },
     {
+      "language": "cpp",
+      "mean_peak_rss_mb": null,
+      "mean_elapsed_s": null,
+      "status": "failed"
+    },
+    {
       "language": "crystal",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -139,12 +145,6 @@
       "status": "dotnet build"
     },
     {
-      "language": "eiffel",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "eiffel: ec not found"
-    },
-    {
       "language": "erlang",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -161,12 +161,6 @@
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "failed"
-    },
-    {
-      "language": "frege",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "frege: frege not found"
     },
     {
       "language": "fsharp",
@@ -229,12 +223,6 @@
       "status": "modula3: m3 not found"
     },
     {
-      "language": "nemerle",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "nemerle: ncc not found"
-    },
-    {
       "language": "nim",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -259,22 +247,10 @@
       "status": "failed"
     },
     {
-      "language": "oz",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "oz: oz not found"
-    },
-    {
       "language": "pascal",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "pascal build"
-    },
-    {
-      "language": "pascal_alt",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "pascal_alt: fpc not found"
     },
     {
       "language": "phix",
@@ -295,12 +271,6 @@
       "status": "bench measurement failed"
     },
     {
-      "language": "q",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "q: q not found"
-    },
-    {
       "language": "r",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -313,12 +283,6 @@
       "status": "failed"
     },
     {
-      "language": "rust",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "rust build"
-    },
-    {
       "language": "scala",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -329,12 +293,6 @@
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "failed"
-    },
-    {
-      "language": "smalltalk",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "smalltalk: gst not found"
     },
     {
       "language": "sml",
@@ -361,16 +319,10 @@
       "status": "v: v not found"
     },
     {
-      "language": "vala",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "vala build"
-    },
-    {
       "language": "x10",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "x10: x10c not found"
+      "status": "x10: cannot install"
     },
     {
       "language": "zig",
@@ -379,5 +331,5 @@
       "status": "zig build"
     }
   ],
-  "count": 63
+  "count": 55
 }
