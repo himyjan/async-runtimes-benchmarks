@@ -3,7 +3,9 @@
 #include <semaphore.h>
 #include <atomic>
 
-static std::atomic<int> remaining;
+#define NUM_THREADS 1000
+
+static atomic_int remaining;
 static sem_t sem;
 
 static void *worker(void *arg) {
@@ -24,11 +26,11 @@ int main(int argc, char **argv) {
     remaining.store(num_tasks);
     sem_init(&sem, 0, 0);
 
-    pthread_t *threads = calloc(num_tasks, sizeof(pthread_t));
-    for (long i = 0; i < num_tasks; i++) {
+    pthread_t threads[NUM_THREADS];
+    for (long i = 0; i < NUM_THREADS; i++) {
         pthread_create(&threads[i], NULL, worker, NULL);
     }
-    for (long i = 0; i < num_tasks; i++) {
+    for (long i = 0; i < NUM_THREADS; i++) {
         pthread_join(threads[i], NULL);
     }
     sem_wait(&sem);

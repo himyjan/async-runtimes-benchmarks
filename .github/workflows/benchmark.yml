@@ -175,8 +175,6 @@ jobs:
           - { language: smol, os: ubuntu-latest }
           - { language: gtk_rs, os: ubuntu-latest }
           - { language: rayon, os: ubuntu-latest }
-          - { language: rayon2, os: ubuntu-latest }
-          - { language: tokio_alt, os: ubuntu-latest }
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
