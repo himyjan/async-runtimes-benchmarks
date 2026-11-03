@@ -293,4 +293,5 @@ Jobs use `continue-on-error: true`, so a language whose toolchain isn't availabl
 runner is reported as "failed" in the table rather than blocking the whole benchmark.
 Each benchmark run is capped at **120 seconds** (`--timeout 120` passed to
 `scripts/bench.py`), so a hung or pathologically slow implementation fails fast
-instead of stalling its matrix job.
+instead of stalling its matrix job. Each matrix job additionally has
+`timeout-minutes: 5` as a safety net for hung builds or toolchain installs.
