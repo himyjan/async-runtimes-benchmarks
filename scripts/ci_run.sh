@@ -951,7 +951,7 @@ python3 "$ROOT/scripts/bench.py" \
   --lang "$LANG" \
   --cmd "${BENCH_CMD[@]}" \
   --iterations 1 \
-  --timeout 900 \
+  --timeout 120 \
   --cwd "$SRC" > "$RESULT.tmp" && mv "$RESULT.tmp" "$RESULT" \
   || fail "bench measurement failed"
 

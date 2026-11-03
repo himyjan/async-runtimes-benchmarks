@@ -3,7 +3,7 @@
 
 Usage:
     python3 scripts/bench.py --lang <name> --cmd <command>... [--cwd <dir>] \
-        [--iterations 3] [--timeout 900]
+        [--iterations 3] [--timeout 120]
 
 Prints a single JSON object to stdout with an aggregate summary plus per-iteration
 details. Designed to be called from CI; each language job writes its own JSON file
@@ -165,7 +165,7 @@ def main():
     ap.add_argument("--cmd", required=True, nargs="+", help="command to run")
     ap.add_argument("--cwd", default=".", help="working directory")
     ap.add_argument("--iterations", type=int, default=1, help="repeat count")
-    ap.add_argument("--timeout", type=int, default=900, help="per-run timeout (s)")
+    ap.add_argument("--timeout", type=int, default=120, help="per-run timeout (s)")
     args = ap.parse_args()
 
     results = [run_once(args.cmd, args.cwd, args.timeout) for _ in range(args.iterations)]
