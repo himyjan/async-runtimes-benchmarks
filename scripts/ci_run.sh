@@ -370,6 +370,7 @@ case "$LANG" in
   r)
     have Rscript || { apt_install r-base || fail "r: Rscript not found"; }
     have Rscript || fail "r: Rscript not found"
+    Rscript -e 'install.packages("coro", repos="https://cloud.r-project.org")' || fail "r: coro package install failed"
     BENCH_CMD=(Rscript main.R "$TASKS")
     ;;
   vala)
