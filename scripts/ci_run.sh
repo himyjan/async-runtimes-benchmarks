@@ -385,7 +385,10 @@ case "$LANG" in
     BENCH_CMD=(phix main.exw "$TASKS")
     ;;
   x10)
-    have x10c || { apt_install x10 || fail "x10: x10c not found"; }
+    have x10c || {
+      curl -fsSL https://github.com/x10-lang/x10/releases/download/v2.7.2/x10-2.7.2-linux-x86_64.tar.gz -o /tmp/x10.tar.gz 2>/dev/null &&
+        tar -xzf /tmp/x10.tar.gz -C /tmp/ && export PATH="/tmp/x10-2.7.2/bin:$PATH" || fail "x10: cannot install"
+    }
     have x10c || fail "x10: x10c not found"
     x10c -O -o /tmp/bench_${LANG} Main.x10 || fail "x10 build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
