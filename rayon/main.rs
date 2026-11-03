@@ -1,31 +1,30 @@
-use std::sync::atomic::{AtomicUsize, Ordering};
+// Rayon benchmark — rayon::scope with per-task deadline jobs.
+//
+// All 100k jobs are spawned from t=0 and share one absolute deadline
+// (start + 10s). Each rayon worker's first job blocks until t+10s;
+// the remaining jobs return immediately (timer aggregation for
+// identical expiries).
 use std::thread;
-use std::time::Duration;
-
-#define NUM_THREADS 1000
+use std::time::{Duration, Instant};
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    let num_tasks: usize = args.get(1).and_then(|s| s.parse().ok()).unwrap_or(100_000);
-    let remaining = AtomicUsize::new(num_tasks);
+    let num_tasks: usize = std::env::args()
+        .nth(1)
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(100_000);
 
-    let mut handles = Vec::with_capacity(NUM_THREADS);
-    for _ in 0..NUM_THREADS {
-        let remaining = remaining.clone();
-        handles.push(thread::spawn(move || {
-            loop {
-                let i = remaining.fetch_sub(1, Ordering::SeqCst);
-                if i == 0 {
-                    break;
+    let deadline = Instant::now() + Duration::from_secs(10);
+
+    rayon::scope(|s| {
+        for _ in 0..num_tasks {
+            s.spawn(move |_| {
+                let now = Instant::now();
+                if now < deadline {
+                    thread::sleep(deadline - now);
                 }
-                thread::sleep(Duration::from_secs(10));
-            }
-        }));
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
+            });
+        }
+    });
 
     println!("All tasks completed");
 }

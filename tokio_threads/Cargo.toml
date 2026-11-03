@@ -1,0 +1,10 @@
+[package]
+name = "tokio_threads"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+
+[[bin]]
+name = "tokio_threads"
+path = "main.rs"

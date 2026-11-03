@@ -3,11 +3,8 @@ name = "gtk_rs"
 version = "0.1.0"
 edition = "2021"
 [dependencies]
-tokio = { version = "1", features = ["full"] }
+glib = "0.18"
 
 [[bin]]
 name = "gtk_rs"
 path = "main.rs"
-EOF
-
-echo "Created gtk_rs/Cargo.toml"

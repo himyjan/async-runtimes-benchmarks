@@ -562,7 +562,7 @@ case "$LANG" in
     ;;
   koka_cpp)
     have g++ || fail "koka_cpp: g++ not found"
-    g++ -O2 main.cpp -o /tmp/bench_${LANG} -lstdc++ || fail "koka_cpp build"
+    g++ -O2 -pthread main.cpp -o /tmp/bench_${LANG} || fail "koka_cpp build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   oz)
@@ -707,13 +707,17 @@ case "$LANG" in
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   gtk)
-    have rustc || fail "gtk: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "gtk build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "gtk: cargo not found"
+    { have pkg-config && pkg-config --exists glib-2.0; } || apt_install libglib2.0-dev
+    pkg-config --exists glib-2.0 || fail "gtk: glib dev headers not found"
+    cargo build --release || fail "gtk build"
+    BENCH_CMD=(./target/release/gtk "$TASKS")
     ;;
   gtk_c)
     have gcc || fail "gtk_c: gcc not found"
-    gcc -O2 $(pkg-config --cflags --libs gtk+-3.0 2>/dev/null) main.c -o /tmp/bench_${LANG} || fail "gtk_c build"
+    { have pkg-config && pkg-config --exists gtk+-3.0; } || apt_install libgtk-3-dev
+    pkg-config --exists gtk+-3.0 || fail "gtk_c: gtk3 dev headers not found"
+    gcc -O2 -pthread $(pkg-config --cflags gtk+-3.0) main.c $(pkg-config --libs gtk+-3.0) -o /tmp/bench_${LANG} || fail "gtk_c build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   flutter)
@@ -783,9 +787,9 @@ case "$LANG" in
     BENCH_CMD=(scala-cli main.scala "$TASKS")
     ;;
   tokio_threads)
-    have rustc || fail "tokio_threads: rustc not found"
-    rustc -O main.rs -o /tmp/bench_${LANG} || fail "tokio_threads build"
-    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
+    have cargo || fail "tokio_threads: cargo not found"
+    cargo build --release || fail "tokio_threads build"
+    BENCH_CMD=(./target/release/tokio_threads "$TASKS")
     ;;
   std_thread)
     have rustc || fail "std_thread: rustc not found"
@@ -828,6 +832,8 @@ case "$LANG" in
     ;;
   gtk_rs)
     have cargo || fail "gtk_rs: cargo not found"
+    { have pkg-config && pkg-config --exists glib-2.0; } || apt_install libglib2.0-dev
+    pkg-config --exists glib-2.0 || fail "gtk_rs: glib dev headers not found"
     cargo build --release || fail "gtk_rs build"
     BENCH_CMD=(./target/release/gtk_rs "$TASKS")
     ;;

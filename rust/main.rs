@@ -1,6 +1,6 @@
-use tokio::time;
-use tokio::task;
 use std::time::Duration;
+use tokio::task;
+use tokio::time;
 
 #[tokio::main]
 async fn main() {

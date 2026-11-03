@@ -14,6 +14,7 @@ different language runtimes.
 - Each task sleeps **10 seconds**.
 - The program exits when all tasks have finished.
 - Peak memory (high-water RSS) and elapsed time are measured per run.
+- Each run has a **120 s (2 min) timeout**; runs that exceed it are marked as failed.
 
 ### Run a single language locally
 
@@ -25,7 +26,7 @@ ruby ruby/main.rb 50000
 deno run deno/main.ts 50000
 
 # example: C++ (compile then run)
-clang++ -std=c++20 -stdlib=libc++ -O2 cpp/main.cpp -o /tmp/cpp_bench
+clang++ -std=c++20 -O2 -pthread cpp/main.cpp -o /tmp/cpp_bench
 /tmp/cpp_bench 50000
 ```
 
@@ -123,8 +124,8 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Rust async-std | latest stable (`rustc`) | async-std::task | `async_std/main.rs` |
 | Ballerina | latest stable (`bal`) | spawn / Semaphore | `ballerina/main.bal` |
 | JavaScript (Browser) | latest stable (`node`) | setTimeout + Promise.all | `browser_js/main.js` |
-| C | latest stable (`gcc`) | OS pthread | `c/main.c` |
-| C (C11 atomic) | latest stable (`gcc`) | std::atomic + semaphore | `c11_atomic/main.c` |
+| C | latest stable (`gcc`) | pthread pool (1000) + deadline table | `c/main.c` |
+| C (C11 atomic) | latest stable (`gcc`) | stdatomic + pthread pool | `c11_atomic/main.c` |
 | Ceylon | latest stable (`ceylon`) | executor + CountDownLatch | `ceylon/main.ceylon` |
 | Ceylon threads | latest stable (`ceylon`) | executor + CountDownLatch | `ceylon_threads/main.ceylon` |
 | Chapel | latest stable (`chpl`) | coforall / semaphore | `chapel/main.chpl` |
@@ -139,7 +140,7 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | C++ jthread | latest stable (`g++`) | std::jthread (C++20) | `cpp_jthread/main.cpp` |
 | C++ threads | latest stable (`g++`) | std::thread | `cpp_threads/main.cpp` |
 | CPython | latest stable (`python3`) | threading.Thread | `cpython/main.py` |
-| Rust crossbeam | latest stable (`rustc`) | crossbeam::scope | `crossbeam/main.rs` |
+| Rust crossbeam | latest stable (`rustc`) | crossbeam::channel + thread pool | `crossbeam/main.rs` |
 | Crystal | latest stable (`crystal`) | spawn fibers + Channel | `crystal/main.cr` |
 | C# threads | latest stable (`dotnet`) | Task.Factory.StartNew | `csharp_threads2/Program.cs` |
 | D | latest stable (`dmd`) | core.thread.Thread | `d/main.d` |
@@ -170,9 +171,9 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Go | latest stable (`go`) | goroutines | `go/main.go` |
 | Gosu | latest stable (`gosu`) | Task.Factory.StartNew | `gosu/Main.gosu` |
 | Groovy | latest stable (`groovy`) | Java Thread | `groovy/main.groovy` |
-| GTK (Rust) | latest stable (`rustc`) | glib::thread | `gtk/main.rs` |
+| GTK (Rust) | latest stable (`rustc`) | glib MainLoop timers | `gtk/main.rs` |
 | GTK (C) | latest stable (`gcc`) | pthread + GTK | `gtk_c/main.c` |
-| GTK (Rust) | latest stable (`rustc`) | glib::thread | `gtk_rs/main.rs` |
+| GTK (Rust) | latest stable (`rustc`) | glib MainLoop timers | `gtk_rs/main.rs` |
 | Scheme (Guile) | latest stable (`guile`) | POSIX threads + condition variable | `guile/main.scm` |
 | Hack | latest stable (`hhvm`) | HH\Async + WaitHandle\all | `hack/main.hh` |
 | Haskell | latest stable (`stack`) | Control.Concurrent.Async | `haskell/Main.hs` |
@@ -212,8 +213,8 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Oz | latest stable (`mozart`) | threads | `oz/main.oz` |
 | Pascal | latest stable (`fpc`) | BeginThread / TEvent | `pascal/main.pas` |
 | Pascal (alt) | latest stable (`fpc`) | BeginThread / TEvent | `pascal_alt/main.pas` |
-| Perl | latest stable (`perl`) | ithreads (threads + join) | `perl/main.pl` |
-| Perl threads | latest stable (`perl`) | ithreads | `perl_threads/main.pl` |
+| Perl | latest stable (`perl`) | fork pool (1000 procs) + deadline | `perl/main.pl` |
+| Perl threads | latest stable (`perl`) | fork pool (1000 procs) + deadline | `perl_threads/main.pl` |
 | Phix | latest stable (`phix`) | tasks / semaphore | `phix/main.exw` |
 | Phix (alt) | latest stable (`phix`) | tasks / semaphore | `phix_alt/main.exw` |
 | PHP | latest stable (`php + ReactPHP`) | event loop timers + Promise.all | `php/main.php` |
@@ -233,16 +234,16 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Raku (alt2) | latest stable (`raku`) | start blocks + await | `raku_alt2/main.raku` |
 | Raku threads | latest stable (`raku`) | start blocks + await | `raku_threads/main.raku` |
 | Rust rayon | latest stable (`rustc`) | rayon::scope | `rayon/main.rs` |
-| Rust rayon2 | latest stable (`rustc`) | rayon::scope | `rayon2/main.rs` |
+| Rust rayon2 | latest stable (`rustc`) | rayon ThreadPool (1000) + scope | `rayon2/main.rs` |
 | Red | latest stable (`red`) | actors / event! | `red/main.red` |
 | Ring | latest stable (`ring`) | threads | `ring/main.ring` |
 | Ruby | latest stable (`ruby`) | OS Thread | `ruby/main.rb` |
 | Ruby threads | latest stable (`ruby`) | Thread | `ruby_threads/main.rb` |
 | Ruby threads2 | latest stable (`ruby`) | Thread | `ruby_threads2/main.rb` |
-| Rust | latest stable (`rustc`) | std::thread | `rust/main.rs` |
-| Rust channels | latest stable (`rustc`) | std::thread + mpsc | `rust_channels/main.rs` |
-| Rust channels2 | latest stable (`rustc`) | std::thread + mpsc | `rust_channels2/main.rs` |
-| Rust mpsc | latest stable (`rustc`) | std::thread + mpsc | `rust_mpsc/main.rs` |
+| Rust | latest stable (`rustc`) | tokio::task | `rust/main.rs` |
+| Rust channels | latest stable (`rustc`) | tokio mpsc channel | `rust_channels/main.rs` |
+| Rust channels2 | latest stable (`rustc`) | tokio mpsc (bounded) | `rust_channels2/main.rs` |
+| Rust mpsc | latest stable (`rustc`) | std::mpsc + thread pool | `rust_mpsc/main.rs` |
 | Rust tokio | latest stable (`rustc`) | tokio::task | `rust_tokio2/main.rs` |
 | Common Lisp (SBCL) | latest stable (`sbcl`) | sb-thread OS threads | `sbcl/main.lisp` |
 | Scala | latest stable (`scala-cli`) | Future / global fork-join pool | `scala/main.scala` |
@@ -252,7 +253,7 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Smalltalk | latest stable (`gst`) | green processes (fork) | `smalltalk/main.st` |
 | SML/NJ | latest stable (`sml`) | Thread.fork / Thread.join | `sml/main.sml` |
 | Rust smol | latest stable (`rustc`) | smol::Timer | `smol/main.rs` |
-| Rust std::thread | latest stable (`rustc`) | std::thread | `std_thread/main.rs` |
+| Rust std::thread | latest stable (`rustc`) | std::thread pool (1000) | `std_thread/main.rs` |
 | SuperCollider | latest stable (`scsynth`) | fork / Semaphore | `supercollider/main.scd` |
 | Swift | latest stable (`swiftc`) | Swift Concurrency (Task / withTaskGroup) | `swift/main.swift` |
 | Tcl | latest stable (`tclsh`) | thread package (OS threads) | `tcl/main.tcl` |
@@ -290,3 +291,6 @@ are installed from source/packages at job start.
 
 Jobs use `continue-on-error: true`, so a language whose toolchain isn't available on the
 runner is reported as "failed" in the table rather than blocking the whole benchmark.
+Each benchmark run is capped at **120 seconds** (`--timeout 120` passed to
+`scripts/bench.py`), so a hung or pathologically slow implementation fails fast
+instead of stalling its matrix job.

@@ -12,6 +12,10 @@ use Time::HiRes qw(usleep);
 my $num_tasks = ($ARGV[0] // 100_000);
 my $max_procs = 1000;    # Max concurrent processes to avoid OOM
 my %pids;
+# Shared absolute deadline: every task is "sleeping" until start + 10s.
+# Children forked after the deadline return immediately, so the pool
+# drains the remaining tasks at fork speed instead of 10s per batch.
+my $deadline = time() + 10;
 
 for my $i (1 .. $num_tasks) {
     # Non-blocking: reap finished child processes immediately
@@ -38,9 +42,10 @@ for my $i (1 .. $num_tasks) {
     if (!defined $pid) {
         die "fork failed: $!";
     } elsif ($pid == 0) {
-        # Child process — sleeps 10 seconds then exits
-        sleep(10);
-        exit(0);
+        # Child — wait for the shared absolute deadline, then exit fast.
+        my $left = $deadline - time();
+        sleep($left) if $left > 0;
+        POSIX::_exit(0);   # skip END blocks: 100k forks must stay cheap
     }
     $pids{$pid} = 1;
 }
