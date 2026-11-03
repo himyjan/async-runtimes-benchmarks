@@ -660,5 +660,6 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "chore: update benchmark results [skip ci]"
             git remote set-url origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+            git pull --rebase origin "${{ github.ref_name }}" || true
             git push origin "${{ github.ref_name }}"
           fi
