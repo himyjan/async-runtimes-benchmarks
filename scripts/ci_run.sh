@@ -645,7 +645,7 @@ case "$LANG" in
     ;;
   nim_alt)
     have nim || fail "nim_alt: nim not found"
-    nim c -d:release -o:/tmp/bench_${LANG} main.nim || fail "nim_alt build"
+    nim c -d:release --threads:on -o:/tmp/bench_${LANG} main.nim || fail "nim_alt build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   nodejs_alt)

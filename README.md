@@ -214,7 +214,7 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Assembly (x86_64 NASM) | latest stable (`nasm + ld`) | pthread + semaphore | `assembly/main.asm` |
 | Rust async-std | latest stable (`rustc`) | async-std::task | `async_std/main.rs` |
 | Ballerina | latest stable (`bal`) | spawn / Semaphore | `ballerina/main.bal` |
-| JavaScript (Browser) | latest stable (`node`) | setTimeout + Promise.all | `browser_js/main.js` |
+| JavaScript (Browser) | latest stable (`node`) | worker_threads pool (1000) + deadline table | `browser_js/main.js` |
 | C | latest stable (`gcc`) | pthread pool (1000) + deadline table | `c/main.c` |
 | C (C11 atomic) | latest stable (`gcc`) | stdatomic + pthread pool | `c11_atomic/main.c` |
 | Ceylon | latest stable (`ceylon`) | executor + CountDownLatch | `ceylon/main.ceylon` |
@@ -238,11 +238,11 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | D parallel | latest stable (`dmd`) | std.parallelism | `d_parallel/main.d` |
 | D parallel2 | latest stable (`dmd`) | std.parallelism | `d_parallel2/main.d` |
 | D Phobos | latest stable (`dmd`) | std.parallelism | `d_phobos/main.d` |
-| Dart | latest stable (`dart`) | Future.delayed + Future.wait | `dart/main.dart` |
-| Dart (alt) | latest stable (`dart`) | Future.delayed + Future.wait | `dart_alt/main.dart` |
+| Dart | latest stable (`dart`) | Isolate pool (1000) + deadline table | `dart/main.dart` |
+| Dart (alt) | latest stable (`dart`) | Isolate pool (1000) + deadline table | `dart_alt/main.dart` |
 | Delphi | latest stable (`fpc`) | BeginThread / TEvent | `delphi/main.dpr` |
-| Deno | latest stable (`deno`) | setTimeout + Promise.all | `deno/main.ts` |
-| Deno (alt) | latest stable (`deno`) | setTimeout + Promise.all | `deno_alt/main.ts` |
+| Deno | latest stable (`deno`) | Worker pool (1000) + deadline table | `deno/main.ts` |
+| Deno (alt) | latest stable (`deno`) | Worker pool (1000) + deadline table | `deno_alt/main.ts` |
 | .NET | latest stable (`dotnet`) | Task.Delay + Task.WhenAll | `dotnet/Program.cs` |
 | Eiffel | latest stable (`ec`) | EiffelThreads | `eiffel/main.e` |
 | Elixir | latest stable (`elixir`) | spawn_monitor processes | `elixir/main.exs` |
@@ -257,7 +257,7 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | FreePascal | latest stable (`fpc`) | BeginThread / TEvent | `fpc/main.pas` |
 | FreePascal | latest stable (`fpc`) | BeginThread / TEvent | `freepascal/main.pas` |
 | Frege | latest stable (`frege`) | forkIO / threadDelay | `frege/Main.fr` |
-| F# | latest stable (`fsharpc + Mono`) | Async workflows (Async.Parallel) | `fsharp/main.fsx` |
+| F# | latest stable (`fsharpi`) | Thread pool (1000) + deadline table | `fsharp/main.fsx` |
 | Gleam | latest stable (`latest stable`) | See source | `gleam/gleam.toml` |
 | Go | latest stable (`go`) | goroutines | `go/main.go` |
 | Gosu | latest stable (`gosu`) | Task.Factory.StartNew | `gosu/Main.gosu` |
@@ -270,14 +270,14 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Haskell | latest stable (`stack`) | Control.Concurrent.Async | `haskell/Main.hs` |
 | Haxe | latest stable (`haxe + neko`) | Thread.create | `haxe/Main.hx` |
 | Hy | latest stable (`hy`) | threads | `hy/main.hy` |
-| Hy (alt) | latest stable (`hy`) | threads | `hylang/main.hy` |
+| Hy (alt) | latest stable (`hy`) | thread pool (1000) + deadline table | `hylang/main.hy` |
 | Idris 2 | latest stable (`idris2`) | forkIO / threadDelay | `idris2/main.idr` |
 | Io | latest stable (`io`) | actors / futures | `io/main.io` |
 | J | latest stable (`ijconsole`) | parallel operators + threads | `j/main.ijs` |
 | Janet | latest stable (`janet`) | fibers | `janet/main.janet` |
-| Java | latest stable (`temurin 21`) | Virtual Threads (Project Loom) | `java/VirtualThreads.java` |
+| Java | latest stable (`temurin 21`) | ExecutorService fixed thread pool (1000) + deadline table | `java/Threads.java` |
 | Java threads | latest stable (`javac`) | Thread + CountDownLatch | `java_threads2/Main.java` |
-| Julia | latest stable (`julia`) | @async tasks | `julia/main_a.jl` |
+| Julia | latest stable (`julia`) | Threads.@spawn pool (1000) + deadline table | `julia/main_a.jl` |
 | Julia threads | latest stable (`julia`) | Threads.@spawn | `julia_threads/main.jl` |
 | Koka | latest stable (`koka`) | effect handlers / forkIO | `koka/main.kk` |
 | Koka (C++ backend) | latest stable (`g++`) | std::thread | `koka_cpp/main.cpp` |
@@ -290,15 +290,15 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | MATLAB | latest stable (`matlab`) | parfor | `matlab/main.m` |
 | Mercury | latest stable (`mmc`) | threads + semaphore | `mercury/main.m` |
 | Modula-3 | latest stable (`m3`) | Thread.Fork / Sema | `modula3/main.m3` |
-| Mypy | latest stable (`python3`) | asyncio | `mypy/main.py` |
+| Mypy | latest stable (`python3`) | threading.Thread pool (1000) + deadline table | `mypy/main.py` |
 | Nemerle | latest stable (`ncc + mono`) | .NET threads | `nemerle/main.n` |
-| Nim | latest stable (`nim`) | asyncproc / sleepAsync | `nim/main.nim` |
-| Nim (alt) | latest stable (`nim`) | asyncproc / sleepAsync | `nim_alt/main.nim` |
-| JavaScript (Node.js) | latest stable (`node`) | setTimeout + Promise.all | `nodejs/main.js` |
-| Node.js (alt) | latest stable (`node`) | setTimeout + Promise.all | `nodejs_alt/main.js` |
+| Nim | latest stable (`nim`) | thread pool (1000) + deadline table (--threads:on) | `nim/main.nim` |
+| Nim (alt) | latest stable (`nim`) | thread pool (1000) + deadline table (--threads:on) | `nim_alt/main.nim` |
+| JavaScript (Node.js) | latest stable (`node`) | worker_threads pool (1000) + deadline table | `nodejs/main.js` |
+| Node.js (alt) | latest stable (`node`) | worker_threads pool (1000) + deadline table | `nodejs_alt/main.js` |
 | Oberon | latest stable (`obc`) | Threads.Fork / Sema | `oberon/main.mod` |
 | Objective-C | latest stable (`clang`) | NSThread / GCD | `objective-c/main.m` |
-| OCaml | latest stable (`ocamlc`) | native Thread | `ocaml/main.ml` |
+| OCaml | latest stable (`ocamlc`) | Mutex-protected thread pool (1000) + deadline table | `ocaml/main.ml` |
 | Odin | latest stable (`odin`) | threads.Spawn | `odin/main.odin` |
 | Odin (alt) | latest stable (`odin`) | threads.Spawn | `odin_alt/main.odin` |
 | Oz | latest stable (`mozart`) | threads | `oz/main.oz` |
@@ -314,16 +314,16 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Pony | latest stable (`ponyc`) | actors | `pony/main.pony` |
 | PowerShell | latest stable (`pwsh`) | .NET ThreadPool.QueueUserWorkItem | `powershell/main.ps1` |
 | Prolog | latest stable (`swipl`) | thread_create / message passing | `prolog/main.pl` |
-| Python | latest stable (`python3`) | asyncio (create_task / sleep) | `python/main.py` |
+| Python | latest stable (`python3`) | threading.Thread pool (1000) + deadline table | `python/main.py` |
 | Q | latest stable (`q`) | spawn / semaphore | `q/main.q` |
 | Qt (C++) | latest stable (`g++`) | QThread | `qt/main.cpp` |
 | R | latest stable (`Rscript`) | parallel package | `r/main.R` |
-| Racket | latest stable (`racket`) | OS thread + thread-wait! | `racket/main.rkt` |
-| Racket threads | latest stable (`racket`) | thread | `racket_threads/main.rkt` |
-| Raku | latest stable (`raku`) | start blocks + await | `raku/main.raku` |
-| Raku (alt) | latest stable (`raku`) | start blocks + await | `raku_alt/main.raku` |
-| Raku (alt2) | latest stable (`raku`) | start blocks + await | `raku_alt2/main.raku` |
-| Raku threads | latest stable (`raku`) | start blocks + await | `raku_threads/main.raku` |
+| Racket | latest stable (`racket`) | thread pool (1000) + deadline table | `racket/main.rkt` |
+| Racket threads | latest stable (`racket`) | thread pool (1000) + deadline table | `racket_threads/main.rkt` |
+| Raku | latest stable (`raku`) | start blocks pool (1000) + deadline table | `raku/main.raku` |
+| Raku (alt) | latest stable (`raku`) | start blocks pool (1000) + deadline table | `raku_alt/main.raku` |
+| Raku (alt2) | latest stable (`raku`) | start blocks pool (1000) + deadline table | `raku_alt2/main.raku` |
+| Raku threads | latest stable (`raku`) | start blocks pool (1000) + deadline table | `raku_threads/main.raku` |
 | Rust rayon | latest stable (`rustc`) | rayon::scope | `rayon/main.rs` |
 | Rust rayon2 | latest stable (`rustc`) | rayon ThreadPool (1000) + scope | `rayon2/main.rs` |
 | Red | latest stable (`red`) | actors / event! | `red/main.red` |
@@ -340,9 +340,9 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Scala | latest stable (`scala-cli`) | Future / global fork-join pool | `scala/main.scala` |
 | Scala threads | latest stable (`scala-cli`) | Executor + CountDownLatch | `scala_threads/main.scala` |
 | Scheme (Guile) | latest stable (`guile`) | POSIX threads + condition variable | `scheme/main.scm` |
-| Scheme (alt) | latest stable (`guile`) | POSIX threads | `scheme_alt/main.scm` |
+| Scheme (alt) | latest stable (`guile`) | thread pool (1000) + deadline table | `scheme_alt/main.scm` |
 | Smalltalk | latest stable (`gst`) | green processes (fork) | `smalltalk/main.st` |
-| SML/NJ | latest stable (`sml`) | Thread.fork / Thread.join | `sml/main.sml` |
+| SML/NJ | latest stable (`sml`) | Sync.mutex thread pool (1000) + deadline table | `sml/main.sml` |
 | Rust smol | latest stable (`rustc`) | smol::Timer | `smol/main.rs` |
 | Rust std::thread | latest stable (`rustc`) | std::thread pool (1000) | `std_thread/main.rs` |
 | SuperCollider | latest stable (`scsynth`) | fork / Semaphore | `supercollider/main.scd` |
@@ -351,8 +351,8 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Rust tokio alt | latest stable (`rustc`) | tokio::task | `tokio_alt/main.rs` |
 | Rust tokio | latest stable (`rustc`) | tokio::task | `tokio_threads/main.rs` |
 | Turbo Pascal | latest stable (`fpc`) | BeginThread / TEvent | `turbo_pascal/main.pas` |
-| TypeScript | latest stable (`tsx`) | Promise.all + setTimeout | `typescript/main.ts` |
-| TypeScript (alt) | latest stable (`tsx`) | Promise.all + setTimeout | `typescript_alt/main.ts` |
+| TypeScript | latest stable (`tsx`) | worker_threads pool (1000) + deadline table | `typescript/main.ts` |
+| TypeScript (alt) | latest stable (`tsx`) | worker_threads pool (1000) + deadline table | `typescript_alt/main.ts` |
 | Unicon | latest stable (`icont`) | co-expressions / threads | `unicon/main.icn` |
 | V | latest stable (`v`) | go goroutines + sync.WaitGroup | `v/main.v` |
 | V (alt) | latest stable (`v`) | go goroutines + sync.WaitGroup | `v_alt/main.v` |
