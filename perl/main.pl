@@ -1,59 +1,36 @@
 #!/usr/bin/env perl
-# Perl benchmark — fork-based process pool (not ithreads)
-# Perl ithreads clone the entire interpreter per thread — too heavy for 100k tasks.
-# fork() with copy-on-write is memory-efficient on Unix-like systems.
-# Non-blocking waitpid(WNOHANG) keeps ~1000 processes running continuously.
-
+# Perl benchmark — ithreads pool (real OS threads, no fork()).
+#
+# 1000 ithreads share one absolute deadline (start + 10s): each thread's
+# first wait blocks until t+10s, later waits return immediately (timer
+# aggregation for identical expiries). Tasks are claimed via a shared
+# atomic counter under a lock.
 use strict;
 use warnings;
-use POSIX qw(:sys_wait_h);
-use Time::HiRes qw(usleep);
+use threads;
+use threads::shared;
+use Time::HiRes qw(time sleep);
 
-my $num_tasks = ($ARGV[0] // 100_000);
-my $max_procs = 1000;    # Max concurrent processes to avoid OOM
-my %pids;
-# Shared absolute deadline: every task is "sleeping" until start + 10s.
-# Children forked after the deadline return immediately, so the pool
-# drains the remaining tasks at fork speed instead of 10s per batch.
-my $deadline = time() + 10;
+my $num_tasks   = ($ARGV[0] // 100_000);
+my $max_threads = 1000;    # Thread pool size (ithreads clone the interpreter)
+my $deadline    = time() + 10;   # shared absolute deadline
 
-for my $i (1 .. $num_tasks) {
-    # Non-blocking: reap finished child processes immediately
+my $next : shared = 0;     # task counter shared across threads
+
+sub worker {
     while (1) {
-        my $pid = waitpid(-1, WNOHANG);
-        if ($pid > 0) {
-            delete $pids{$pid};
-        } else {
-            last;  # No more dead children to clean up right now
+        my $i;
+        {
+            lock($next);           # claim a task index atomically
+            $i = $next++;
         }
-    }
-
-    # If at max processes, wait briefly for one to finish
-    while (scalar keys %pids >= $max_procs) {
-        my $pid = waitpid(-1, WNOHANG);
-        if ($pid > 0) {
-            delete $pids{$pid};
-        } else {
-            usleep(10_000);  # Throttle: sleep 10ms to avoid CPU spinning
-        }
-    }
-
-    my $pid = fork();
-    if (!defined $pid) {
-        die "fork failed: $!";
-    } elsif ($pid == 0) {
-        # Child — wait for the shared absolute deadline, then exit fast.
+        last if $i >= $num_tasks;
         my $left = $deadline - time();
         sleep($left) if $left > 0;
-        POSIX::_exit(0);   # skip END blocks:100k forks must stay cheap
     }
-    $pids{$pid} = 1;
 }
 
-# Wait for remaining children to finish
-while (scalar keys %pids) {
-    my $pid = waitpid(-1, 0);
-    delete $pids{$pid} if $pid > 0;
-}
+my @threads = map { threads->create(\&worker) } 1 .. $max_threads;
+$_->join for @threads;
 
 print "All tasks completed\n";

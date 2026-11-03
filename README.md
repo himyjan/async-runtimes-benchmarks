@@ -205,8 +205,8 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Oz | latest stable (`mozart`) | threads | `oz/main.oz` |
 | Pascal | latest stable (`fpc`) | BeginThread / TEvent | `pascal/main.pas` |
 | Pascal (alt) | latest stable (`fpc`) | BeginThread / TEvent | `pascal_alt/main.pas` |
-| Perl | latest stable (`perl`) | fork pool (1000 procs) + deadline | `perl/main.pl` |
-| Perl threads | latest stable (`perl`) | fork pool (1000 procs) + deadline | `perl_threads/main.pl` |
+| Perl | latest stable (`perl`) | ithreads pool (1000) + deadline | `perl/main.pl` |
+| Perl threads | latest stable (`perl`) | ithreads pool (1000) + deadline | `perl_threads/main.pl` |
 | Phix | latest stable (`phix`) | tasks / semaphore | `phix/main.exw` |
 | Phix (alt) | latest stable (`phix`) | tasks / semaphore | `phix_alt/main.exw` |
 | PHP | latest stable (`php + ReactPHP`) | event loop timers + Promise.all | `php/main.php` |
