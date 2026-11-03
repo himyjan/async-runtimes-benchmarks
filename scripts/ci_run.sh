@@ -152,10 +152,7 @@ case "$LANG" in
   julia)
     have julia || { apt_install julia || fail "julia: julia not found"; }
     have julia || fail "julia: julia not found"
-    JULIA_NUM_THREADS=auto julia main_a.jl "$TASKS" || fail "julia run"
-    echo '{"lang":"julia","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(env JULIA_NUM_THREADS=auto julia main_a.jl "$TASKS")
     ;;
   go)
     have go || fail "go: go not found (use actions/setup-go)"
@@ -415,10 +412,7 @@ case "$LANG" in
     ;;
   red)
     have red || fail "red: red not found"
-    red main.red "$TASKS" || fail "red run"
-    echo '{"lang":"red","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(red main.red "$TASKS")
     ;;
   oberon)
     have obc || fail "oberon: obc not found"
@@ -435,10 +429,7 @@ case "$LANG" in
     ;;
   frege)
     have frege || fail "frege: frege not found"
-    frege Main.fr || fail "frege build/run"
-    echo '{"lang":"frege","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(frege Main.fr)
     ;;
   apl)
     have dyalog || fail "apl: dyalog not found"
@@ -503,10 +494,7 @@ case "$LANG" in
     ;;
   fantom)
     have fan || fail "fantom: fan not found"
-    fan main.fan "$TASKS" || fail "fantom run"
-    echo '{"lang":"fantom","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(fan main.fan "$TASKS")
     ;;
   lazarus)
     have fpc || fail "lazarus: fpc not found"
@@ -535,10 +523,7 @@ case "$LANG" in
   julia_threads)
     have julia || { apt_install julia || fail "julia_threads: julia not found"; }
     have julia || fail "julia_threads: julia not found"
-    JULIA_NUM_THREADS=auto julia main.jl "$TASKS" || fail "julia_threads run"
-    echo '{"lang":"julia_threads","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(env JULIA_NUM_THREADS=auto julia main.jl "$TASKS")
     ;;
   d_parallel)
     have dmd || fail "d_parallel: dmd not found"
@@ -680,10 +665,7 @@ case "$LANG" in
     ;;
   csharp_threads2)
     have dotnet || fail "csharp_threads2: dotnet not found"
-    dotnet run --project . -c Release --no-build -- "$TASKS" || fail "csharp_threads2 run"
-    echo '{"lang":"csharp_threads2","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(dotnet run --project . -c Release --no-build -- "$TASKS")
     ;;
   kotlin_threads2)
     have kotlinc || fail "kotlin_threads2: kotlinc not found"
@@ -874,10 +856,7 @@ case "$LANG" in
   flix)
     have flix || fail "flix: flix not found"
     flix build >/dev/null 2>&1 || fail "flix build"
-    flix run "Main.main()" || fail "flix run"
-    echo '{"lang":"flix","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(flix run "Main.main()")
     ;;
   gleam)
     have gleam || fail "gleam: gleam not found (use gleam-lang/setup-gleam)"
@@ -900,41 +879,25 @@ case "$LANG" in
   idris2)
     have idris2 || fail "idris2: idris2 not found"
     idris2 --build main.idr -o /tmp/bench_${LANG} || fail "idris2 build"
-    /tmp/bench_${LANG} "$TASKS" || fail "idris2 run"
-    echo '{"lang":"idris2","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   io)
     have io || { apt_install io-language || fail "io: io not found"; }
     have io || fail "io: io not found"
-    io main.io "$TASKS" || fail "io run"
-    echo '{"lang":"io","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(io main.io "$TASKS")
     ;;
   janet)
     have janet || fail "janet: janet not found"
-    janet main.janet "$TASKS" || fail "janet run"
-    echo '{"lang":"janet","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(janet main.janet "$TASKS")
     ;;
   koka)
     have koka || fail "koka: koka not found"
-    koka main.kk || fail "koka build/run"
-    echo '{"lang":"koka","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(koka main.kk)
     ;;
   prolog)
     have swipl || { apt_install swiprolog || fail "prolog: swipl not found"; }
     have swipl || fail "prolog: swipl not found"
-    erlc main.erl 2>/dev/null || true
-    swipl -q -g main -t halt main.pl "$TASKS" || fail "prolog run"
-    echo '{"lang":"prolog","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(swipl -q -g main -t halt main.pl "$TASKS")
     ;;
   typescript)
     have tsx || fail "typescript: tsx not found (use actions/setup-node)"
@@ -943,10 +906,7 @@ case "$LANG" in
   wren)
     have wren || { apt_install wren || fail "wren: wren not found"; }
     have wren || fail "wren: wren not found"
-    wren main.wren "$TASKS" || fail "wren run"
-    echo '{"lang":"wren","successful":1,"failed":0,"error":null,"mean_peak_rss_mb":null,"mean_elapsed_s":null,"results":[]}' > "$RESULT"
-    cat "$RESULT"
-    exit 0
+    BENCH_CMD=(wren main.wren "$TASKS")
     ;;
   *)
     fail "unknown language $LANG"
