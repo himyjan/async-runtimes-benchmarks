@@ -3,14 +3,14 @@
     var remaining = numTasks;
     var semaphore = Semaphore("main", 0);
 
-    for (i in 1..numTasks) {
-        fork {
-            (10).wait;
+    numTasks.do { |i|
+        Routine({
+            10.wait;
             remaining = remaining - 1;
             if (remaining == 0) {
                 semaphore.signal;
             };
-        };
+        }).play;
     };
 
     semaphore.wait;
