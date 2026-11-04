@@ -10,7 +10,7 @@ actor worker [
     sem: event!
 ] [
     on-created: func [][
-        wait 10
+        wait 0:0:10
         remaining: remaining - 1
         if remaining = 0 [ signal sem ]
     ]

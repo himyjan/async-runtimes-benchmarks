@@ -1,26 +1,22 @@
+# Julia threads benchmark — Threads.@spawn tasks.
+# All 100k tasks spawned concurrently, each sleeps 10 seconds.
 using Base.Threads
 
 function main()
     num_tasks = parse(Int, ARGS[1])
-    pool_size = min(num_tasks, 1000)
-    deadline = time() + 10.0
-    next_idx = Atomic{Int}(0)
+    remaining = Atomic{Int}(num_tasks)
 
-    function worker()
-        while true
-            idx = atomic_add!(next_idx, 1) - 1
-            idx >= num_tasks && return
-            left = deadline - time()
-            if left > 0
-                sleep(left)
-            end
+    for _ in 1:num_tasks
+        Threads.@spawn begin
+            sleep(10)
+            atomic_sub!(remaining, 1)
         end
     end
 
-    threads = [Threads.@spawn worker() for _ in 1:pool_size]
-    for t in threads
-        wait(t)
+    while atomic_load(remaining) > 0
+        sleep(0.1)
     end
+
     println("All tasks completed")
 end
 

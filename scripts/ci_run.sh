@@ -211,7 +211,7 @@ case "$LANG" in
   nim)
     have nim || { apt_install nim || fail "nim: nim not found"; }
     have nim || fail "nim: nim not found"
-    nim c -d:release --threads:on -o:/tmp/bench_${LANG} main.nim || fail "nim build"
+    nim c -d:release -o:/tmp/bench_${LANG} main.nim || fail "nim build"
     BENCH_CMD=(/tmp/bench_${LANG} "$TASKS")
     ;;
   v)
