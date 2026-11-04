@@ -1,43 +1,45 @@
 | Language | Peak Memory (MB) | Elapsed (s) | Status |
 |---|---:|---:|---|
-| red | 1.95 | 0.09 | ok |
-| rayon | 7.87 | 10.05 | ok |
-| c11_atomic | 11.31 | 10.06 | ok |
-| c | 11.44 | 10.05 | ok |
-| cpp | 12.59 | 10.06 | ok |
-| cpp_jthread | 12.60 | 10.05 | ok |
-| koka_cpp | 12.70 | 10.05 | ok |
-| cpp_threads | 12.75 | 10.07 | ok |
-| std_thread | 13.24 | 10.09 | ok |
-| cpp_atomic | 13.33 | 10.11 | ok |
-| rust_mpsc | 13.93 | 10.07 | ok |
-| crossbeam | 14.25 | 10.08 | ok |
-| gtk_c | 21.11 | 10.78 | ok |
-| smol | 27.11 | 10.08 | ok |
-| rayon2 | 28.04 | 10.33 | ok |
-| mypy | 31.66 | 11.55 | ok |
-| python | 31.75 | 12.97 | ok |
-| gtk_rs | 32.22 | 10.06 | ok |
-| gtk | 32.25 | 10.09 | ok |
-| async_std | 37.04 | 10.14 | ok |
-| rust_channels | 39.74 | 10.09 | ok |
-| tokio_threads | 40.40 | 10.09 | ok |
-| tokio_alt | 40.46 | 10.12 | ok |
-| rust | 40.50 | 10.09 | ok |
-| rust_tokio2 | 40.52 | 10.22 | ok |
-| rust_channels2 | 51.96 | 10.12 | ok |
-| browser_js | 52.89 | 10.22 | ok |
-| nodejs_alt | 55.03 | 11.73 | ok |
-| pypy | 74.39 | 15.98 | ok |
-| typescript_alt | 82.38 | 10.41 | ok |
-| go | 265.68 | 10.24 | ok |
-| elixir | 361.35 | 10.66 | ok |
-| nodejs | 385.01 | 10.09 | ok |
-| php_threads | 570.51 | 11.03 | ok |
-| php | 570.87 | 11.19 | ok |
-| perl | 664.55 | 11.56 | ok |
-| perl_threads | 664.71 | 11.31 | ok |
-| haskell | 1,080.48 | 12.13 | ok |
+| red | 2.01 | 0.08 | ok |
+| rayon | 7.88 | 10.05 | ok |
+| c11_atomic | 11.31 | 10.07 | ok |
+| c | 11.38 | 10.09 | ok |
+| cpp_jthread | 12.60 | 10.14 | ok |
+| cpp_threads | 12.61 | 10.10 | ok |
+| koka_cpp | 12.61 | 10.11 | ok |
+| cpp | 12.71 | 10.08 | ok |
+| std_thread | 13.21 | 10.08 | ok |
+| cpp_atomic | 13.45 | 10.07 | ok |
+| rust_mpsc | 14.17 | 10.09 | ok |
+| crossbeam | 14.25 | 10.09 | ok |
+| gtk_c | 21.65 | 10.39 | ok |
+| smol | 27.18 | 10.09 | ok |
+| rayon2 | 28.07 | 10.40 | ok |
+| cpython | 31.53 | 10.18 | ok |
+| gtk_rs | 32.18 | 10.05 | ok |
+| gtk | 32.59 | 10.08 | ok |
+| guile | 32.80 | 0.17 | ok |
+| async_std | 37.13 | 10.08 | ok |
+| rust_channels | 39.82 | 10.06 | ok |
+| rust_tokio2 | 40.41 | 10.09 | ok |
+| tokio_alt | 40.43 | 10.10 | ok |
+| tokio_threads | 40.47 | 10.09 | ok |
+| rust | 40.50 | 10.10 | ok |
+| rust_channels2 | 51.87 | 10.12 | ok |
+| nodejs | 136.68 | 10.12 | ok |
+| python | 165.59 | 12.75 | ok |
+| mypy | 165.65 | 11.50 | ok |
+| deno | 194.26 | 10.45 | ok |
+| go | 266.03 | 10.26 | ok |
+| pypy | 331.21 | 10.85 | ok |
+| elixir | 362.14 | 10.80 | ok |
+| php_threads | 570.46 | 11.49 | ok |
+| php | 570.68 | 11.45 | ok |
+| julia | 571.13 | 35.35 | ok |
+| raku | 593.70 | 11.72 | ok |
+| perl | 664.39 | 11.56 | ok |
+| perl_threads | 664.81 | 11.33 | ok |
+| haskell | 1,093.40 | 12.09 | ok |
 | ruby | 1,421.52 | 18.82 | ok |
 | ada | — | — | ada build |
 | angelscript | — | — | angelscript build |
@@ -45,6 +47,7 @@
 | asdf | — | — | bench measurement failed |
 | assembly | — | — | assembly: make failed |
 | ballerina | — | — | ballerina: bal not found |
+| browser_js | — | — | failed |
 | ceylon | — | — | ceylon: ceylon not found |
 | ceylon_threads | — | — | ceylon_threads: ceylon not found |
 | chapel | — | — | chapel: chpl not found |
@@ -54,7 +57,6 @@
 | cobol | — | — | cobol build |
 | common-lisp | — | — | bench measurement failed |
 | common_lisp_sbcl | — | — | bench measurement failed |
-| cpython | — | — | failed |
 | crystal | — | — | crystal build |
 | csharp_threads2 | — | — | bench measurement failed |
 | d | — | — | d: dmd not found |
@@ -63,27 +65,24 @@
 | d_phobos | — | — | d_phobos: dmd not found |
 | dart | — | — | bench measurement failed |
 | dart_alt | — | — | dart_alt: dart not found |
-| delphi | — | — | delphi: fpc not found |
-| deno | — | — | failed |
+| delphi | — | — | delphi build |
 | deno_alt | — | — | deno_alt: deno not found |
 | dotnet | — | — | dotnet build |
 | eiffel | — | — | eiffel: ec not found |
 | elixir_threads | — | — | failed |
 | erlang | — | — | erlang build |
-| erlang_threads | — | — | erlang_threads: erlc not found |
+| erlang_threads | — | — | erlang_threads build |
 | factor | — | — | failed |
 | fantom | — | — | fantom: fan not found |
 | flix | — | — | flix: flix not found |
 | flutter | — | — | flutter: dart not found |
-| fortran | — | — | failed |
-| fpc | — | — | fpc: fpc not found |
-| freepascal | — | — | freepascal: fpc not found |
+| fortran | — | — | fortran build |
+| fpc | — | — | fpc build |
+| freepascal | — | — | freepascal build |
 | frege | — | — | frege: frege not found |
-| fsharp | — | — | failed |
 | gleam | — | — | gleam: gleam not found (use gleam-lang/setup-gleam) |
 | gosu | — | — | failed |
 | groovy | — | — | failed |
-| guile | — | — | guile: guile not found |
 | hack | — | — | hack: hhvm not found |
 | haxe | — | — | haxe build |
 | hy | — | — | failed |
@@ -94,7 +93,6 @@
 | janet | — | — | janet: janet not found |
 | java | — | — | bench measurement failed |
 | java_threads2 | — | — | java_threads2 build |
-| julia | — | — | failed |
 | julia_threads | — | — | failed |
 | koka | — | — | koka: koka not found |
 | kotlin | — | — | kotlin build |
@@ -108,7 +106,8 @@
 | modula3 | — | — | modula3: m3 not found |
 | nemerle | — | — | nemerle: ncc not found |
 | nim | — | — | nim build |
-| nim_alt | — | — | nim_alt: nim not found |
+| nim_alt | — | — | nim_alt build |
+| nodejs_alt | — | — | failed |
 | oberon | — | — | oberon: obc not found |
 | ocaml | — | — | ocaml build |
 | odin | — | — | failed |
@@ -126,9 +125,8 @@
 | qt | — | — | qt build |
 | r | — | — | r: coro package install failed |
 | racket | — | — | failed |
-| racket_threads | — | — | racket_threads: racket not found |
-| raku | — | — | failed |
-| raku_threads | — | — | raku_threads: raku not found |
+| racket_threads | — | — | failed |
+| raku_threads | — | — | failed |
 | ring | — | — | ring: ring not found |
 | ruby_threads | — | — | ruby_threads: async gem not installed |
 | ruby_threads2 | — | — | ruby_threads2: async gem not installed |
@@ -143,6 +141,7 @@
 | tcl | — | — | failed |
 | turbo_pascal | — | — | turbo_pascal: fpc not found |
 | typescript | — | — | typescript: tsx not found (use actions/setup-node) |
+| typescript_alt | — | — | failed |
 | unicon | — | — | unicon: icont not found |
 | v | — | — | v: v not found |
 | v_alt | — | — | v_alt: v not found |

@@ -2,236 +2,248 @@
   "languages": [
     {
       "language": "red",
-      "mean_peak_rss_mb": 1.95,
-      "mean_elapsed_s": 0.088,
+      "mean_peak_rss_mb": 2.01,
+      "mean_elapsed_s": 0.082,
       "status": "ok"
     },
     {
       "language": "rayon",
-      "mean_peak_rss_mb": 7.87,
-      "mean_elapsed_s": 10.05,
+      "mean_peak_rss_mb": 7.88,
+      "mean_elapsed_s": 10.051,
       "status": "ok"
     },
     {
       "language": "c11_atomic",
       "mean_peak_rss_mb": 11.31,
-      "mean_elapsed_s": 10.058,
+      "mean_elapsed_s": 10.066,
       "status": "ok"
     },
     {
       "language": "c",
-      "mean_peak_rss_mb": 11.44,
-      "mean_elapsed_s": 10.047,
-      "status": "ok"
-    },
-    {
-      "language": "cpp",
-      "mean_peak_rss_mb": 12.59,
-      "mean_elapsed_s": 10.063,
+      "mean_peak_rss_mb": 11.38,
+      "mean_elapsed_s": 10.092,
       "status": "ok"
     },
     {
       "language": "cpp_jthread",
       "mean_peak_rss_mb": 12.6,
-      "mean_elapsed_s": 10.046,
-      "status": "ok"
-    },
-    {
-      "language": "koka_cpp",
-      "mean_peak_rss_mb": 12.7,
-      "mean_elapsed_s": 10.051,
+      "mean_elapsed_s": 10.14,
       "status": "ok"
     },
     {
       "language": "cpp_threads",
-      "mean_peak_rss_mb": 12.75,
-      "mean_elapsed_s": 10.073,
+      "mean_peak_rss_mb": 12.61,
+      "mean_elapsed_s": 10.102,
       "status": "ok"
     },
     {
-      "language": "std_thread",
-      "mean_peak_rss_mb": 13.24,
-      "mean_elapsed_s": 10.09,
-      "status": "ok"
-    },
-    {
-      "language": "cpp_atomic",
-      "mean_peak_rss_mb": 13.33,
+      "language": "koka_cpp",
+      "mean_peak_rss_mb": 12.61,
       "mean_elapsed_s": 10.112,
       "status": "ok"
     },
     {
+      "language": "cpp",
+      "mean_peak_rss_mb": 12.71,
+      "mean_elapsed_s": 10.083,
+      "status": "ok"
+    },
+    {
+      "language": "std_thread",
+      "mean_peak_rss_mb": 13.21,
+      "mean_elapsed_s": 10.084,
+      "status": "ok"
+    },
+    {
+      "language": "cpp_atomic",
+      "mean_peak_rss_mb": 13.45,
+      "mean_elapsed_s": 10.073,
+      "status": "ok"
+    },
+    {
       "language": "rust_mpsc",
-      "mean_peak_rss_mb": 13.93,
-      "mean_elapsed_s": 10.071,
+      "mean_peak_rss_mb": 14.17,
+      "mean_elapsed_s": 10.085,
       "status": "ok"
     },
     {
       "language": "crossbeam",
       "mean_peak_rss_mb": 14.25,
-      "mean_elapsed_s": 10.077,
+      "mean_elapsed_s": 10.089,
       "status": "ok"
     },
     {
       "language": "gtk_c",
-      "mean_peak_rss_mb": 21.11,
-      "mean_elapsed_s": 10.776,
+      "mean_peak_rss_mb": 21.65,
+      "mean_elapsed_s": 10.389,
       "status": "ok"
     },
     {
       "language": "smol",
-      "mean_peak_rss_mb": 27.11,
-      "mean_elapsed_s": 10.079,
+      "mean_peak_rss_mb": 27.18,
+      "mean_elapsed_s": 10.091,
       "status": "ok"
     },
     {
       "language": "rayon2",
-      "mean_peak_rss_mb": 28.04,
-      "mean_elapsed_s": 10.33,
+      "mean_peak_rss_mb": 28.07,
+      "mean_elapsed_s": 10.398,
       "status": "ok"
     },
     {
-      "language": "mypy",
-      "mean_peak_rss_mb": 31.66,
-      "mean_elapsed_s": 11.547,
-      "status": "ok"
-    },
-    {
-      "language": "python",
-      "mean_peak_rss_mb": 31.75,
-      "mean_elapsed_s": 12.971,
+      "language": "cpython",
+      "mean_peak_rss_mb": 31.53,
+      "mean_elapsed_s": 10.175,
       "status": "ok"
     },
     {
       "language": "gtk_rs",
-      "mean_peak_rss_mb": 32.22,
-      "mean_elapsed_s": 10.062,
+      "mean_peak_rss_mb": 32.18,
+      "mean_elapsed_s": 10.051,
       "status": "ok"
     },
     {
       "language": "gtk",
-      "mean_peak_rss_mb": 32.25,
-      "mean_elapsed_s": 10.086,
+      "mean_peak_rss_mb": 32.59,
+      "mean_elapsed_s": 10.079,
+      "status": "ok"
+    },
+    {
+      "language": "guile",
+      "mean_peak_rss_mb": 32.8,
+      "mean_elapsed_s": 0.169,
       "status": "ok"
     },
     {
       "language": "async_std",
-      "mean_peak_rss_mb": 37.04,
-      "mean_elapsed_s": 10.145,
+      "mean_peak_rss_mb": 37.13,
+      "mean_elapsed_s": 10.082,
       "status": "ok"
     },
     {
       "language": "rust_channels",
-      "mean_peak_rss_mb": 39.74,
-      "mean_elapsed_s": 10.092,
+      "mean_peak_rss_mb": 39.82,
+      "mean_elapsed_s": 10.059,
       "status": "ok"
     },
     {
-      "language": "tokio_threads",
-      "mean_peak_rss_mb": 40.4,
+      "language": "rust_tokio2",
+      "mean_peak_rss_mb": 40.41,
       "mean_elapsed_s": 10.094,
       "status": "ok"
     },
     {
       "language": "tokio_alt",
-      "mean_peak_rss_mb": 40.46,
-      "mean_elapsed_s": 10.115,
+      "mean_peak_rss_mb": 40.43,
+      "mean_elapsed_s": 10.098,
+      "status": "ok"
+    },
+    {
+      "language": "tokio_threads",
+      "mean_peak_rss_mb": 40.47,
+      "mean_elapsed_s": 10.093,
       "status": "ok"
     },
     {
       "language": "rust",
       "mean_peak_rss_mb": 40.5,
-      "mean_elapsed_s": 10.094,
-      "status": "ok"
-    },
-    {
-      "language": "rust_tokio2",
-      "mean_peak_rss_mb": 40.52,
-      "mean_elapsed_s": 10.218,
+      "mean_elapsed_s": 10.1,
       "status": "ok"
     },
     {
       "language": "rust_channels2",
-      "mean_peak_rss_mb": 51.96,
-      "mean_elapsed_s": 10.117,
-      "status": "ok"
-    },
-    {
-      "language": "browser_js",
-      "mean_peak_rss_mb": 52.89,
-      "mean_elapsed_s": 10.225,
-      "status": "ok"
-    },
-    {
-      "language": "nodejs_alt",
-      "mean_peak_rss_mb": 55.03,
-      "mean_elapsed_s": 11.732,
-      "status": "ok"
-    },
-    {
-      "language": "pypy",
-      "mean_peak_rss_mb": 74.39,
-      "mean_elapsed_s": 15.984,
-      "status": "ok"
-    },
-    {
-      "language": "typescript_alt",
-      "mean_peak_rss_mb": 82.38,
-      "mean_elapsed_s": 10.411,
-      "status": "ok"
-    },
-    {
-      "language": "go",
-      "mean_peak_rss_mb": 265.68,
-      "mean_elapsed_s": 10.238,
-      "status": "ok"
-    },
-    {
-      "language": "elixir",
-      "mean_peak_rss_mb": 361.35,
-      "mean_elapsed_s": 10.661,
+      "mean_peak_rss_mb": 51.87,
+      "mean_elapsed_s": 10.123,
       "status": "ok"
     },
     {
       "language": "nodejs",
-      "mean_peak_rss_mb": 385.01,
-      "mean_elapsed_s": 10.094,
+      "mean_peak_rss_mb": 136.68,
+      "mean_elapsed_s": 10.125,
+      "status": "ok"
+    },
+    {
+      "language": "python",
+      "mean_peak_rss_mb": 165.59,
+      "mean_elapsed_s": 12.751,
+      "status": "ok"
+    },
+    {
+      "language": "mypy",
+      "mean_peak_rss_mb": 165.65,
+      "mean_elapsed_s": 11.504,
+      "status": "ok"
+    },
+    {
+      "language": "deno",
+      "mean_peak_rss_mb": 194.26,
+      "mean_elapsed_s": 10.452,
+      "status": "ok"
+    },
+    {
+      "language": "go",
+      "mean_peak_rss_mb": 266.03,
+      "mean_elapsed_s": 10.262,
+      "status": "ok"
+    },
+    {
+      "language": "pypy",
+      "mean_peak_rss_mb": 331.21,
+      "mean_elapsed_s": 10.854,
+      "status": "ok"
+    },
+    {
+      "language": "elixir",
+      "mean_peak_rss_mb": 362.14,
+      "mean_elapsed_s": 10.801,
       "status": "ok"
     },
     {
       "language": "php_threads",
-      "mean_peak_rss_mb": 570.51,
-      "mean_elapsed_s": 11.028,
+      "mean_peak_rss_mb": 570.46,
+      "mean_elapsed_s": 11.486,
       "status": "ok"
     },
     {
       "language": "php",
-      "mean_peak_rss_mb": 570.87,
-      "mean_elapsed_s": 11.188,
+      "mean_peak_rss_mb": 570.68,
+      "mean_elapsed_s": 11.446,
+      "status": "ok"
+    },
+    {
+      "language": "julia",
+      "mean_peak_rss_mb": 571.13,
+      "mean_elapsed_s": 35.351,
+      "status": "ok"
+    },
+    {
+      "language": "raku",
+      "mean_peak_rss_mb": 593.7,
+      "mean_elapsed_s": 11.723,
       "status": "ok"
     },
     {
       "language": "perl",
-      "mean_peak_rss_mb": 664.55,
-      "mean_elapsed_s": 11.562,
+      "mean_peak_rss_mb": 664.39,
+      "mean_elapsed_s": 11.561,
       "status": "ok"
     },
     {
       "language": "perl_threads",
-      "mean_peak_rss_mb": 664.71,
-      "mean_elapsed_s": 11.309,
+      "mean_peak_rss_mb": 664.81,
+      "mean_elapsed_s": 11.326,
       "status": "ok"
     },
     {
       "language": "haskell",
-      "mean_peak_rss_mb": 1080.48,
-      "mean_elapsed_s": 12.129,
+      "mean_peak_rss_mb": 1093.4,
+      "mean_elapsed_s": 12.087,
       "status": "ok"
     },
     {
       "language": "ruby",
       "mean_peak_rss_mb": 1421.52,
-      "mean_elapsed_s": 18.825,
+      "mean_elapsed_s": 18.823,
       "status": "ok"
     },
     {
@@ -269,6 +281,12 @@
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "ballerina: bal not found"
+    },
+    {
+      "language": "browser_js",
+      "mean_peak_rss_mb": null,
+      "mean_elapsed_s": null,
+      "status": "failed"
     },
     {
       "language": "ceylon",
@@ -325,12 +343,6 @@
       "status": "bench measurement failed"
     },
     {
-      "language": "cpython",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "failed"
-    },
-    {
       "language": "crystal",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -382,13 +394,7 @@
       "language": "delphi",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "delphi: fpc not found"
-    },
-    {
-      "language": "deno",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "failed"
+      "status": "delphi build"
     },
     {
       "language": "deno_alt",
@@ -424,7 +430,7 @@
       "language": "erlang_threads",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "erlang_threads: erlc not found"
+      "status": "erlang_threads build"
     },
     {
       "language": "factor",
@@ -454,31 +460,25 @@
       "language": "fortran",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "failed"
+      "status": "fortran build"
     },
     {
       "language": "fpc",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "fpc: fpc not found"
+      "status": "fpc build"
     },
     {
       "language": "freepascal",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "freepascal: fpc not found"
+      "status": "freepascal build"
     },
     {
       "language": "frege",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "frege: frege not found"
-    },
-    {
-      "language": "fsharp",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "failed"
     },
     {
       "language": "gleam",
@@ -497,12 +497,6 @@
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "failed"
-    },
-    {
-      "language": "guile",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "guile: guile not found"
     },
     {
       "language": "hack",
@@ -563,12 +557,6 @@
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
       "status": "java_threads2 build"
-    },
-    {
-      "language": "julia",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
-      "status": "failed"
     },
     {
       "language": "julia_threads",
@@ -652,7 +640,13 @@
       "language": "nim_alt",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "nim_alt: nim not found"
+      "status": "nim_alt build"
+    },
+    {
+      "language": "nodejs_alt",
+      "mean_peak_rss_mb": null,
+      "mean_elapsed_s": null,
+      "status": "failed"
     },
     {
       "language": "oberon",
@@ -760,19 +754,13 @@
       "language": "racket_threads",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "racket_threads: racket not found"
-    },
-    {
-      "language": "raku",
-      "mean_peak_rss_mb": null,
-      "mean_elapsed_s": null,
       "status": "failed"
     },
     {
       "language": "raku_threads",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
-      "status": "raku_threads: raku not found"
+      "status": "failed"
     },
     {
       "language": "ring",
@@ -859,6 +847,12 @@
       "status": "typescript: tsx not found (use actions/setup-node)"
     },
     {
+      "language": "typescript_alt",
+      "mean_peak_rss_mb": null,
+      "mean_elapsed_s": null,
+      "status": "failed"
+    },
+    {
       "language": "unicon",
       "mean_peak_rss_mb": null,
       "mean_elapsed_s": null,
@@ -925,5 +919,5 @@
       "status": "zig build"
     }
   ],
-  "count": 154
+  "count": 153
 }
