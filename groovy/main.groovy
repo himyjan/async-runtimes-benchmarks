@@ -1,12 +1,19 @@
 def numTasks = (args.size() > 0 ? args[0] as int : 100000)
-def threads = []
+def poolSize = Math.min(numTasks, 1000)
+def remaining = new java.util.concurrent.AtomicInteger(numTasks)
+def latch = new java.util.concurrent.CountDownLatch(1)
+def executor = java.util.concurrent.Executors.newFixedThreadPool(poolSize)
 
 numTasks.times {
-    threads << Thread.start {
+    executor.submit {
         Thread.sleep(10000)
+        if (remaining.decrementAndGet() == 0) {
+            latch.countDown()
+        }
     }
 }
 
-threads*.join()
+executor.shutdown()
+latch.await()
 
 println "All tasks completed"

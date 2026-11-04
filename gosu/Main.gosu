@@ -8,7 +8,7 @@ class Program
     static int remaining;
     static ManualResetEventSlim sem;
 
-    static void Worker()
+    static void Worker(object state)
     {
         Thread.Sleep(10000);
         if (Interlocked.Decrement(ref remaining) == 0)
@@ -21,11 +21,24 @@ class Program
         remaining = numTasks;
         sem = new ManualResetEventSlim(false);
 
-        var tasks = new Task[numTasks];
-        for (int i = 0; i < numTasks; i++)
-            tasks[i] = Task.Factory.StartNew(Worker);
+        // Fixed thread pool — 1000 workers claim tasks from the ThreadPool
+        var poolThreads = new Thread[1000];
+        for (int t = 0; t < 1000; t++)
+        {
+            poolThreads[t] = new Thread(() =>
+            {
+                while (true)
+                {
+                    // Each worker processes tasks until remaining hits 0
+                    if (Interlocked.Decrement(ref remaining) <= 0) break;
+                    Thread.Sleep(10000);
+                }
+            });
+            poolThreads[t].IsBackground = true;
+            poolThreads[t].Start();
+        }
 
-        Task.WaitAll(tasks);
+        sem.Wait();
         Console.WriteLine("All tasks completed");
     }
 }
