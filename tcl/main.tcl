@@ -6,30 +6,35 @@ if {$argc > 0} {
 }
 
 set pool_size 1000
-set deadline [expr {[clock seconds] + 10}]
-set done_count 0
-set lock [thread::create -prefix lock_]
+set done 0
 set main_tid [thread::id]
 
-# Each worker handles a static subset of tasks; all share one deadline.
-# Since all tasks sleep until the same deadline (start + 10s), each thread
-# just sleeps once for ~10 seconds then reports done.
+# Each worker handles a static slice of tasks; all sleep 10 seconds.
+set tasks_per_worker [expr {$num_tasks / $pool_size}]
+set remainder [expr {$num_tasks % $pool_size}]
+
+set start 0
 for {set w 0} {$w < $pool_size} {incr w} {
+    set count $tasks_per_worker
+    if {$w < $remainder} { incr count }
+    set end [expr {$start + $count - 1}]
+    
     thread::create {
-        variable deadline main_tid
-        set left [expr {$deadline - [clock seconds]}]
-        if {$left > 0} {
-            after [expr {$left * 1000}]
+        variable start end main_tid
+        for {set i $start} {$i <= $end} {incr i} {
+            after 10000
         }
         thread::send $main_tid [list done]
     }
+    
+    set start [expr {$end + 1}]
 }
 
 # Wait for all workers to report done
-while {$done_count < $pool_size} {
+while {$done < $pool_size} {
     set msg [thread::receive]
     if {[lindex $msg 0] eq "done"} {
-        incr done_count
+        incr done
     }
 }
 

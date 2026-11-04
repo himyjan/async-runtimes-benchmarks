@@ -338,15 +338,15 @@ Peak memory = high-water RSS measured while the 100,000 tasks sleep for 10 s.
 | Common Lisp (SBCL) | latest stable (`sbcl`) | sb-thread OS threads | `sbcl/main.lisp` |
 | Scala | latest stable (`scala-cli`) | Future / global fork-join pool | `scala/main.scala` |
 | Scala threads | latest stable (`scala-cli`) | Executor + CountDownLatch | `scala_threads/main.scala` |
-| Scheme (Guile) | latest stable (`guile`) | POSIX threads + condition variable | `scheme/main.scm` |
-| Scheme (alt) | latest stable (`guile`) | thread pool (1000) + deadline table | `scheme_alt/main.scm` |
+| Scheme (Guile) | latest stable (`guile`) | thread pool (1000) + sleep 10s | `scheme/main.scm` |
+| Scheme (alt) | latest stable (`guile`) | thread pool (1000) + sleep 10s | `scheme_alt/main.scm` |
 | Smalltalk | latest stable (`gst`) | green processes (fork) | `smalltalk/main.st` |
-| SML/NJ | latest stable (`sml`) | Sync.mutex thread pool (1000) + deadline table | `sml/main.sml` |
+| SML/NJ | latest stable (`sml`) | Thread.fork pool (1000) + sleep 10s | `sml/main.sml` |
 | Rust smol | latest stable (`rustc`) | smol::Timer | `smol/main.rs` |
 | Rust std::thread | latest stable (`rustc`) | std::thread pool (1000) | `std_thread/main.rs` |
 | SuperCollider | latest stable (`scsynth`) | fork / Semaphore | `supercollider/main.scd` |
 | Swift | latest stable (`swiftc`) | Swift Concurrency (Task / withTaskGroup) | `swift/main.swift` |
-| Tcl | latest stable (`tclsh`) | thread package (OS threads) | `tcl/main.tcl` |
+| Tcl | latest stable (`tclsh`) | thread pool (1000) + after 10s | `tcl/main.tcl` |
 | Rust tokio alt | latest stable (`rustc`) | tokio::task | `tokio_alt/main.rs` |
 | Rust tokio | latest stable (`rustc`) | tokio::task | `tokio_threads/main.rs` |
 | Turbo Pascal | latest stable (`fpc`) | BeginThread / TEvent | `turbo_pascal/main.pas` |

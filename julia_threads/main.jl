@@ -1,5 +1,3 @@
-# Julia threads benchmark — Threads.@spawn tasks.
-# All 100k tasks spawned concurrently, each sleeps 10 seconds.
 using Base.Threads
 
 function main()
