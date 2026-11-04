@@ -201,6 +201,66 @@ jobs:
         with:
           channel: "stable"
 
+      - name: Set up D (DMD)
+        if: contains(fromJSON('["d","d_parallel","d_parallel2","d_phobos"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq dmd >/dev/null 2>&1 || true
+
+      - name: Set up Erlang
+        if: contains(fromJSON('["erlang","erlang_threads"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq erlang >/dev/null 2>&1 || true
+
+      - name: Set up FreePascal
+        if: contains(fromJSON('["delphi","fpc","freepascal"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq fpc >/dev/null 2>&1 || true
+
+      - name: Set up Guile
+        if: matrix.language == 'guile'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq guile-3.0 >/dev/null 2>&1 || true
+
+      - name: Set up Kotlin
+        if: contains(fromJSON('["kotlin","kotlin_threads2"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq kotlin >/dev/null 2>&1 || true
+
+      - name: Set up Nim
+        if: contains(fromJSON('["nim","nim_alt"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq nim >/dev/null 2>&1 || true
+
+      - name: Set up Racket
+        if: contains(fromJSON('["racket","racket_threads"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq racket >/dev/null 2>&1 || true
+
+      - name: Set up Raku
+        if: contains(fromJSON('["raku","raku_threads"]'), matrix.language)
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq rakudo >/dev/null 2>&1 || true
+
+      - name: Set up Zig
+        if: matrix.language == 'zig'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq zig >/dev/null 2>&1 || true
+
+      - name: Set up Wolfram
+        if: matrix.language == 'wolfram'
+        run: |
+          sudo apt-get update -qq >/dev/null 2>&1 || true
+          sudo apt-get install -y -qq wolfram-engine >/dev/null 2>&1 || true
+
       - name: Set up Java (latest LTS for virtual threads)
         if: matrix.language == 'java'
         uses: actions/setup-java@v4
