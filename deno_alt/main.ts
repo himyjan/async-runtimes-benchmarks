@@ -6,12 +6,16 @@ const POOL_SIZE = 1000;
 const deadline = Date.now() + 10_000;
 
 const workerCode = `
-  const { workerId, numTasks, deadline, poolSize } = self.data;
-  for (let i = workerId; i < numTasks; i += poolSize) {
-    const left = deadline - Date.now();
-    if (left > 0) await new Promise(r => setTimeout(r, left));
-  }
-  self.postMessage("done");
+  self.addEventListener('message', (e) => {
+    const { workerId, numTasks, deadline, poolSize } = e.data;
+    for (let i = workerId; i < numTasks; i += poolSize) {
+      const left = deadline - Date.now();
+      if (left > 0) {
+        await new Promise(r => setTimeout(r, left));
+      }
+    }
+    self.postMessage("done");
+  });
 `;
 
 let completed = 0;
@@ -19,7 +23,7 @@ for (let w = 0; w < POOL_SIZE; w++) {
     const blob = new Blob([workerCode], { type: 'application/javascript' });
     const url = URL.createObjectURL(blob);
     const worker = new Worker(url, { type: 'module' });
-    worker.data = { workerId: w, numTasks, deadline, poolSize };
+    worker.postMessage({ workerId: w, numTasks, deadline, poolSize });
     worker.onmessage = () => {
         completed++;
         if (completed === POOL_SIZE) console.log("All tasks completed");

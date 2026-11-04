@@ -1,7 +1,3 @@
-;; Scheme (Guile) benchmark — POSIX thread pool over a shared deadline table.
-;; All 100k tasks share one absolute deadline (start + 10s); 1000 worker
-;; threads claim task indices via a shared counter and sleep until each
-;; task's deadline, so the run finishes in ~10s.
 (use-modules (system threads))
 
 (define num-tasks
@@ -11,12 +7,9 @@
         100000)))
 
 (define pool-size 1000)
-(define start-time (current-time))
-(define deadline (+ start-time 10))  ; seconds
-(define next-task (make-thread-local 0))
+(define deadline (+ (current-time) 10))
+(define next-task 0)
 (define lock (make-mutex))
-(define cond (make-condition-variable))
-(define remaining (make-thread-local num-tasks))
 
 (define (sleep-until d)
   (let loop ()
@@ -37,21 +30,11 @@
             (set! next-task (+ i 1))
             (mutex-unlock! lock)
             (sleep-until deadline)
-            (mutex-lock! lock)
-            (set! remaining (- remaining 1))
-            (when (= remaining 0) (condition-variable-signal! cond))
-            (mutex-unlock! lock)
             (loop))))))
 
 (define threads
-  (for/list ([i (in-range pool-size)])
-    (make-thread worker)))
+  (map (lambda (_) (make-thread worker)) (make-list pool-size)))
 
-(for ([t threads])
-  (thread-wait! t))
+(for-each thread-join! threads)
 
-(mutex-lock! lock)
-(when (> remaining 0) (condition-variable-wait! cond lock))
-(mutex-unlock! lock)
-
-(displayln "All tasks completed")
+(display "All tasks completed\n")
