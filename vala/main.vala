@@ -2,14 +2,33 @@ using GLib;
 
 int num_tasks = 100000;
 int remaining = num_tasks;
-GLib.Thread[] threads = new GLib.Thread[num_tasks];
-GLib.Private sem = new GLib.Private((destroy) => {});
+const int POOL_SIZE = 1000;
+GLib.Thread[] threads = new GLib.Thread[POOL_SIZE];
+GLib.Mutex mutex = new GLib.Mutex();
+GLib.Cond cond = new GLib.Cond();
+bool done = false;
 
 static int worker(gpointer data) {
-    g_usleep(10 * 1000 * 1000);
-    __sync_fetch_and_sub(&remaining, 1);
-    if (remaining == 0) {
-        // signal main
+    while (!done) {
+        mutex.lock();
+        if (remaining <= 0) {
+            done = true;
+            cond.broadcast();
+            mutex.unlock();
+            return 0;
+        }
+        remaining--;
+        int my_remaining = remaining;
+        mutex.unlock();
+
+        g_usleep(10 * 1000 * 1000); // sleep 10 seconds
+
+        mutex.lock();
+        if (my_remaining == 0) {
+            done = true;
+            cond.broadcast();
+        }
+        mutex.unlock();
     }
     return 0;
 }
@@ -20,18 +39,19 @@ int main(string[] args) {
         remaining = num_tasks;
     }
 
-    for (int i = 0; i < num_tasks; i++) {
-        threads[i] = GLib.Thread.create("worker", worker, null, GLib.ThreadPriority.NORMAL, 0, null);
+    for (int i = 0; i < POOL_SIZE; i++) {
+        threads[i] = GLib.Thread.create("worker", worker, null);
     }
 
-    // Wait using a condition variable approach
-    GLib.Mutex mutex = new GLib.Mutex();
-    GLib.Cond cond = new GLib.Cond();
     mutex.lock();
-    while (remaining > 0) {
+    while (!done) {
         cond.wait(mutex, -1);
     }
     mutex.unlock();
+
+    for (int i = 0; i < POOL_SIZE; i++) {
+        threads[i].join();
+    }
 
     print("All tasks completed\n");
     return 0;

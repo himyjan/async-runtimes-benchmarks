@@ -1,14 +1,13 @@
 import 'dart:isolate';
 import 'dart:async';
 
-/// Worker isolate entry point — Isolate.spawn passes exactly one argument,
-/// so we receive a list and destructure it.
+/// Worker isolate entry point — Isolate.spawn passes exactly one argument.
 Future<void> worker(List<dynamic> args) async {
-  final int workerId = args[0];
-  final int poolSize = args[1];
-  final int numTasks = args[2];
-  final int deadlineMs = args[3];
-  final SendPort port = args[4];
+  final int workerId = args[0] as int;
+  final int poolSize = args[1] as int;
+  final int numTasks = args[2] as int;
+  final int deadlineMs = args[3] as int;
+  final SendPort port = args[4] as SendPort;
 
   for (var i = workerId; i < numTasks; i += poolSize) {
     final now = DateTime.now().millisecondsSinceEpoch;
@@ -19,8 +18,9 @@ Future<void> worker(List<dynamic> args) async {
 }
 
 Future<void> main() async {
-  final numTasks = int.tryParse(const String.fromEnvironment('num_tasks',
-      defaultValue: '100000')) ?? 100000;
+  final numTasks = int.tryParse(
+          const String.fromEnvironment('num_tasks', defaultValue: '100000')) ??
+      100000;
   final poolSize = numTasks.clamp(1, 1000);
   final deadlineMs = DateTime.now().millisecondsSinceEpoch + 10_000;
 
@@ -34,7 +34,8 @@ Future<void> main() async {
   });
 
   for (var w = 0; w < poolSize; w++) {
-    await Isolate.spawn(worker, [w, poolSize, numTasks, deadlineMs, receivePort.sendPort],
+    await Isolate.spawn(worker,
+        [w, poolSize, numTasks, deadlineMs, receivePort.sendPort],
         errorsAreFatal: true);
   }
 

@@ -2,6 +2,7 @@ public class Benchmark {
     static int numTasks = 100000;
     static int remaining;
     static CountDownLatch latch;
+    static final int POOL_SIZE = 1000;
 
     static void worker() {
         try { Thread.sleep(10000); } catch (InterruptedException e) {}
@@ -14,14 +15,15 @@ public class Benchmark {
         if (args.length > 0) numTasks = Integer.parseInt(args[0]);
         remaining = numTasks;
         latch = new CountDownLatch(1);
-        
-        Thread[] threads = new Thread[numTasks];
+
+        // Fixed thread pool — 1000 workers, not one OS thread per task.
+        ExecutorService pool = Executors.newFixedThreadPool(POOL_SIZE);
         for (int i = 0; i < numTasks; i++) {
-            threads[i] = new Thread(Benchmark::worker);
-            threads[i].start();
+            pool.submit(Benchmark::worker);
         }
-        for (Thread t : threads) t.join();
+        pool.shutdown();
         latch.await();
+        pool.awaitTermination(1, TimeUnit.MINUTES);
         System.out.println("All tasks completed");
     }
 }

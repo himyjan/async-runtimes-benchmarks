@@ -11,6 +11,7 @@
        01  I              PIC 9(9).
        01  Arg-Count      PIC 9(9).
        01  Arg-String     PIC X(32).
+       01  Remaining      PIC 9(9) VALUE 100000.
 
        PROCEDURE DIVISION.
        Main.
@@ -18,15 +19,15 @@
            IF Arg-Count > 0 THEN
                ACCEPT Arg-String FROM COMMAND-LINE-ARGUMENT 1.
                MOVE Arg-String TO Num-Tasks.
+               MOVE Num-Tasks TO Remaining.
            END-IF.
 
-           PERFORM VARYING I FROM 1 BY 1 UNTIL I > Num-Tasks
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 1000
                CALL "C$THREAD" USING BY VALUE 0, BY VALUE 0,
                    BY REFERENCE Worker-Function, BY VALUE 0
                END-CALL
            END-PERFORM.
 
-           *> Wait long enough for all 10-second threads to finish
            CALL "sleep" USING BY VALUE 11.
 
            DISPLAY "All tasks completed".

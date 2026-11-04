@@ -5,11 +5,16 @@ section .data
 section .bss
     num_tasks resq 1
     remaining resq 1
+    next_task resq 1
     sem resq 1
+    mutex resq 1
 
 section .text
     global main
     extern pthread_create
+    extern pthread_mutex_init
+    extern pthread_mutex_lock
+    extern pthread_mutex_unlock
     extern sem_init
     extern sem_wait
     extern sem_post
@@ -37,14 +42,26 @@ section .text
 
 worker:
     SAVE_REGS
+    mov rdi, [mutex]
+    call pthread_mutex_lock
+    mov rax, [next_task]
+    cmp rax, [num_tasks]
+    jge .done_claim
+    inc qword [next_task]
+    mov rdi, [mutex]
+    call pthread_mutex_unlock
     mov rdi, 10
     call sleep
+    jmp worker
+.done_claim:
+    mov rdi, [mutex]
+    call pthread_mutex_unlock
     lock dec qword [remaining]
     cmp qword [remaining], 0
-    je .done
+    je .last_task
     RESTORE_REGS
     ret
-.done:
+.last_task:
     mov rdi, [sem]
     call sem_post
     RESTORE_REGS
@@ -58,16 +75,19 @@ main:
     mov rdi, 100000
     mov [num_tasks], rdi
     mov [remaining], rdi
+    mov qword [next_task], 0
+
+    lea rdi, [mutex]
+    call pthread_mutex_init
 
     mov rdi, sem
     mov rsi, 0
     mov rdx, 0
     call sem_init
 
-    mov rcx, [num_tasks]
+    ; Create 1000 worker threads
+    mov rcx, 1000
 .create_loop:
-    test rcx, rcx
-    jz .create_done
     push rcx
     lea rdi, [rsp-8]
     mov qword [rsp-8], 0
@@ -78,8 +98,7 @@ main:
     mov rsp, rbp
     pop rcx
     dec rcx
-    jmp .create_loop
-.create_done:
+    jnz .create_loop
 
     mov rdi, [sem]
     mov rsi, -1

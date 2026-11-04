@@ -2,7 +2,7 @@ fun main() {
     val numTasks = 100000
     val remaining = AtomicInteger(numTasks)
     val latch = CountDownLatch(1)
-    val executor = Executors.newFixedThreadPool(numTasks)
+    val executor = Executors.newFixedThreadPool(1000)
 
     for (i in 1..numTasks) {
         executor.submit {
